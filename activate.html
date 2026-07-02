@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Texting Factory Kenya | Activate Your Account</title>
+<link rel="icon" type="image/svg+xml" href="logo-icon.svg">
+<meta name="description" content="Activate your Texting Factory tutor account with a one-time KES 100 payment via M-Pesa. Start earning by teaching Kiswahili to international learners today.">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<style>
+  .material-symbols-outlined { font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24; vertical-align:middle; }
+  body { min-height: 100dvh; }
+
+  /* Spinner */
+  .spinner-lg  { border:4px solid rgba(142,0,0,0.15); border-top-color:#8e0000; border-radius:50%; width:48px; height:48px; animation:spin 0.9s linear infinite; }
+  .spinner-sm  { border:3px solid rgba(255,255,255,0.3); border-top-color:#fff; border-radius:50%; width:20px; height:20px; animation:spin 0.7s linear infinite; display:inline-block; vertical-align:middle; }
+  @keyframes spin { to { transform:rotate(360deg); } }
+
+  /* Pulse animation for waiting state */
+  .pulse-ring {
+    position:absolute; inset:0; border-radius:50%;
+    background:rgba(16,110,9,0.15);
+    animation: pulse-anim 2s ease-out infinite;
+  }
+  @keyframes pulse-anim {
+    0%  { transform:scale(0.8); opacity:0.8; }
+    70% { transform:scale(1.3); opacity:0; }
+    100%{ transform:scale(1.3); opacity:0; }
+  }
+
+  /* Step transitions */
+  .step { display:none; animation: fadeIn 0.3s ease; }
+  .step.active { display:block; }
+  @keyframes fadeIn { from{ opacity:0; transform:translateY(8px); } to{ opacity:1; transform:translateY(0); } }
+
+  /* Progress bar */
+  #progressBar { transition: width 0.5s ease; }
+
+  /* Success checkmark */
+  .check-circle { animation: checkPop 0.4s ease; }
+  @keyframes checkPop { 0%{ transform:scale(0); } 60%{ transform:scale(1.2); } 100%{ transform:scale(1); } }
+
+  /* Button hover states */
+  .pay-btn:hover:not(:disabled) { box-shadow: 0 8px 25px rgba(142,0,0,0.35); transform: translateY(-1px); }
+  .pay-btn:active:not(:disabled) { transform: scale(0.98); }
+  .resend-btn:hover { background: rgba(142,0,0,0.06); }
+  .retry-btn:hover:not(:disabled) { box-shadow: 0 8px 25px rgba(142,0,0,0.35); transform: translateY(-1px); }
+
+  /* Card hover */
+  .phone-card { transition: box-shadow 0.2s ease; }
+  .phone-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+
+  /* Step transition */
+  .step { transition: opacity 0.3s ease, transform 0.3s ease; }
+</style>
+<script>
+  tailwind.config = {
+    darkMode:"class",
+    theme: {
+      extend: {
+        colors: {
+          "background":"#fcf9f8","surface":"#fcf9f8","surface-container-lowest":"#ffffff",
+          "surface-container":"#f0edec","surface-container-high":"#ebe7e7",
+          "surface-container-low":"#f6f3f2",
+          "on-surface":"#1c1b1b","on-surface-variant":"#5d3f3b",
+          "primary":"#8e0000","on-primary":"#ffffff","primary-fixed":"#ffdad4",
+          "on-primary-fixed":"#410000","on-primary-fixed-variant":"#930000",
+          "outline-variant":"#e6bdb6","outline":"#916f69",
+          "secondary":"#106e09","on-secondary":"#ffffff",
+          "secondary-container":"#9cf987","on-secondary-container":"#197411",
+          "error":"#ba1a1a","error-container":"#ffdad6","on-error-container":"#93000a"
+        }
+      }
+    }
+  }
+</script>
+</head>
+<body class="bg-background text-on-surface font-sans">
+
+  <!-- Top bar -->
+  <header class="fixed top-0 w-full z-50 bg-surface shadow-sm h-14 flex items-center px-4 border-b border-outline-variant">
+    <a href="signup.html" class="flex items-center gap-1 text-primary text-sm font-semibold">
+      <span class="material-symbols-outlined text-base">arrow_back</span> Back
+    </a>
+    <div class="flex-1 flex justify-center items-center gap-2">
+      <img src="logo-icon.svg" alt="Texting Factory" class="w-8 h-8">
+      <span class="font-bold text-primary text-lg">Texting Factory Kenya</span>
+    </div>
+    <div class="w-14"></div><!-- balance spacer -->
+  </header>
+
+  <!-- Progress steps indicator -->
+  <div class="fixed top-14 w-full z-40 bg-surface px-4 pt-3 pb-2 border-b border-outline-variant">
+    <div class="flex items-center justify-center gap-3 max-w-xs mx-auto">
+      <div id="dot1" class="w-7 h-7 rounded-full bg-primary text-on-primary flex items-center justify-center text-xs font-bold shrink-0 transition-all">1</div>
+      <div class="flex-1 h-1 rounded bg-outline-variant relative overflow-hidden">
+        <div id="progressBar" class="absolute left-0 top-0 bottom-0 bg-primary rounded w-0"></div>
+      </div>
+      <div id="dot2" class="w-7 h-7 rounded-full bg-surface-container text-on-surface-variant flex items-center justify-center text-xs font-bold shrink-0 transition-all">2</div>
+    </div>
+    <p class="text-center text-xs text-on-surface-variant mt-1.5" id="stepLabel">Step 1 of 2 — Pay Activation Fee</p>
+  </div>
+
+  <main class="pt-32 pb-10 px-4 min-h-screen flex flex-col items-center justify-start">
+    <div class="w-full max-w-md">
+
+      <!-- ════════════════════════════════════════════════════════ -->
+      <!-- STEP 1: Confirm phone & initiate payment                 -->
+      <!-- ════════════════════════════════════════════════════════ -->
+      <div class="step active" id="step-pay">
+        <div class="text-center mb-6">
+          <h1 class="text-2xl font-bold text-on-surface">Activate Your Account</h1>
+          <p class="text-on-surface-variant text-sm mt-1">A one-time fee of <strong>KES 100</strong> unlocks unlimited earning potential</p>
+        </div>
+
+        <!-- Amount Card -->
+        <div class="bg-gradient-to-br from-primary via-primary-container to-primary text-on-primary rounded-2xl p-6 mb-4 shadow-lg">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-xs uppercase tracking-widest opacity-70 font-semibold">Activation Fee</p>
+              <p class="text-4xl font-extrabold mt-1">KES 100</p>
+              <p class="text-sm opacity-70 mt-1">One-time payment · Lifetime access</p>
+            </div>
+            <div class="w-14 h-14 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-sm">
+              <span class="material-symbols-outlined text-3xl" style="font-variation-settings:'FILL' 1;">payments</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Phone destination card -->
+        <div class="phone-card bg-surface-container-lowest border border-outline-variant rounded-2xl p-5 mb-4 flex items-center justify-between shadow-sm">
+          <div>
+            <p class="text-xs text-on-surface-variant uppercase tracking-wide font-semibold mb-0.5">Payment prompt will be sent to</p>
+            <p class="font-bold text-on-surface text-lg" id="phoneDisplay">+254 7XX XXX XXX</p>
+          </div>
+          <span class="material-symbols-outlined text-primary text-3xl" style="font-variation-settings:'FILL' 1;">smartphone</span>
+        </div>
+
+        <!-- What happens next -->
+        <div class="bg-surface-container-low rounded-xl p-4 mb-5 space-y-2">
+          <p class="text-xs font-bold text-on-surface uppercase tracking-wide mb-2">What happens next:</p>
+          <div class="flex items-center gap-3 text-sm">
+            <span class="w-6 h-6 rounded-full bg-primary text-on-primary flex items-center justify-center text-xs font-bold shrink-0">1</span>
+            <span>Tap the button — your phone receives an M-Pesa prompt</span>
+          </div>
+          <div class="flex items-center gap-3 text-sm text-on-surface-variant">
+            <span class="w-6 h-6 rounded-full bg-surface-container flex items-center justify-center text-xs font-bold shrink-0">2</span>
+            <span>Enter your M-Pesa PIN to approve KES 100</span>
+          </div>
+          <div class="flex items-center gap-3 text-sm text-on-surface-variant">
+            <span class="w-6 h-6 rounded-full bg-surface-container flex items-center justify-center text-xs font-bold shrink-0">3</span>
+            <span>Your account activates instantly</span>
+          </div>
+        </div>
+
+        <!-- Error area -->
+        <div id="errorBox" class="hidden bg-error-container text-on-error-container rounded-xl p-4 mb-4 flex items-start gap-3">
+          <span class="material-symbols-outlined text-error text-xl shrink-0 mt-0.5">error</span>
+          <div>
+            <p class="font-semibold text-sm" id="errorTitle">Request failed</p>
+            <p class="text-xs mt-0.5" id="errorMsg">Please try again.</p>
+          </div>
+        </div>
+
+        <!-- CTA Button -->
+        <button id="payBtn"
+          class="pay-btn w-full bg-primary text-on-primary font-bold py-4 rounded-2xl flex items-center justify-center gap-2 shadow-lg transition-all text-base">
+          <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;" id="payBtnIcon">phone_iphone</span>
+          <span id="payBtnText">Send M-Pesa Prompt (KES 100)</span>
+        </button>
+
+        <p class="text-center text-xs text-on-surface-variant mt-4">
+          Wrong number? <a href="signup.html" class="text-primary font-semibold hover:underline">Go back</a> to update it.
+        </p>
+      </div>
+
+      <!-- ════════════════════════════════════════════════════════ -->
+      <!-- STEP 1b: Waiting for user to approve on phone            -->
+      <!-- ════════════════════════════════════════════════════════ -->
+      <div class="step" id="step-waiting">
+        <div class="text-center py-6">
+          <!-- Animated phone icon with pulse -->
+          <div class="relative w-28 h-28 mx-auto mb-6">
+            <div class="pulse-ring"></div>
+            <div class="absolute inset-0 flex items-center justify-center">
+              <span class="material-symbols-outlined text-secondary text-6xl" style="font-variation-settings:'FILL' 1;">phone_iphone</span>
+            </div>
+          </div>
+
+          <h2 class="text-2xl font-bold text-on-surface mb-2">Waiting for Payment</h2>
+          <p class="text-on-surface-variant text-sm mb-6">
+            An M-Pesa payment prompt has been sent to<br>
+            <strong class="text-on-surface" id="phonePending">+254 7XX XXX XXX</strong>
+          </p>
+          <p class="text-on-surface-variant text-xs mb-4">Enter your M-Pesa PIN on your phone to approve the KES 100 payment</p>
+
+          <!-- Live status indicator -->
+          <div class="bg-surface-container-low border border-outline-variant rounded-xl p-4 mb-6 space-y-2" id="statusLog">
+            <div class="flex items-center gap-2 text-sm text-secondary">
+              <span class="material-symbols-outlined text-base" style="font-variation-settings:'FILL' 1;">check_circle</span>
+              <span>STK prompt sent successfully</span>
+            </div>
+            <div class="flex items-center gap-2 text-sm text-on-surface-variant" id="listeningRow">
+              <div class="spinner-lg" style="width:16px;height:16px;border-width:2px;"></div>
+              <span>Listening for payment confirmation...</span>
+            </div>
+          </div>
+
+          <!-- Countdown timer -->
+          <p class="text-xs text-on-surface-variant mb-4">
+            Prompt expires in <strong id="countdownDisplay">2:00</strong>
+          </p>
+
+          <!-- Resend option -->
+          <button id="resendBtn"
+            class="resend-btn w-full border border-primary text-primary font-semibold py-3 rounded-xl active:scale-[0.98] transition-all text-sm">
+            Didn't receive the prompt? Resend
+          </button>
+
+          <p class="text-xs text-on-surface-variant mt-3">
+            Wrong number? <a href="signup.html" class="text-primary hover:underline font-semibold">Go back</a>
+          </p>
+        </div>
+      </div>
+
+      <!-- ════════════════════════════════════════════════════════ -->
+      <!-- STEP 2: Payment confirmed — activating                   -->
+      <!-- ════════════════════════════════════════════════════════ -->
+      <div class="step" id="step-confirmed">
+        <div class="text-center py-8">
+          <!-- Success icon -->
+          <div class="w-24 h-24 rounded-full bg-secondary-container flex items-center justify-center mx-auto mb-6 check-circle">
+            <span class="material-symbols-outlined text-secondary text-5xl" style="font-variation-settings:'FILL' 1;">check_circle</span>
+          </div>
+
+          <h2 class="text-2xl font-bold text-on-surface mb-2">Karibu! Payment Confirmed</h2>
+
+          <!-- Transaction details -->
+          <div class="bg-surface-container-low border border-outline-variant rounded-xl p-4 mb-6 text-left space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs text-on-surface-variant uppercase tracking-wide font-semibold">Amount Paid</span>
+              <span class="font-bold text-secondary">KES 100</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-xs text-on-surface-variant uppercase tracking-wide font-semibold">Transaction Ref</span>
+              <span class="font-mono text-sm font-semibold" id="txRefDisplay">—</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-xs text-on-surface-variant uppercase tracking-wide font-semibold">Status</span>
+              <span class="bg-secondary-container text-on-secondary-container text-xs font-bold px-3 py-0.5 rounded-full">✓ Confirmed</span>
+            </div>
+          </div>
+
+          <p class="text-on-surface-variant text-sm mb-6">
+            Your account is now active. You're ready to start earning by teaching Kiswahili to international learners.
+          </p>
+
+          <button id="dashboardBtn"
+            class="w-full bg-primary text-on-primary font-bold py-4 rounded-2xl flex items-center justify-center gap-2 shadow-lg active:scale-[0.98] transition-all text-base">
+            <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">dashboard</span>
+            Go to My Dashboard
+          </button>
+        </div>
+      </div>
+
+      <!-- ════════════════════════════════════════════════════════ -->
+      <!-- STEP: Payment timed out / failed                         -->
+      <!-- ════════════════════════════════════════════════════════ -->
+      <div class="step" id="step-failed">
+        <div class="text-center py-8">
+          <div class="w-24 h-24 rounded-full bg-error-container flex items-center justify-center mx-auto mb-6">
+            <span class="material-symbols-outlined text-error text-5xl" style="font-variation-settings:'FILL' 1;">cancel</span>
+          </div>
+
+          <h2 class="text-2xl font-bold text-on-surface mb-2">Payment Not Completed</h2>
+          <p class="text-on-surface-variant text-sm mb-6" id="failureReason">
+            The M-Pesa prompt was not approved. This can happen if you cancelled the prompt, entered an incorrect PIN, or the prompt expired.
+          </p>
+
+          <button id="retryBtn"
+            class="retry-btn w-full bg-primary text-on-primary font-bold py-4 rounded-2xl flex items-center justify-center gap-2 shadow-lg transition-all text-base mb-3">
+            <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">refresh</span>
+            Try Again
+          </button>
+          <a href="signup.html"
+            class="block w-full border border-outline text-on-surface-variant font-semibold py-3 rounded-2xl text-center text-sm">
+            Update Phone Number
+          </a>
+        </div>
+      </div>
+
+    </div><!-- /max-w-md -->
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-surface border-t border-outline-variant">
+    <div class="max-w-md mx-auto px-4 py-6">
+      <div class="flex flex-col items-center text-center gap-3">
+        <div class="flex items-center gap-2">
+          <img src="logo-icon.svg" alt="Texting Factory" class="w-6 h-6">
+          <span class="font-bold text-primary text-sm">Texting Factory Kenya</span>
+        </div>
+        <div class="flex flex-wrap justify-center gap-3 text-xs text-on-surface-variant">
+          <a href="index.html" class="hover:text-primary transition-colors">Home</a>
+          <a href="signup.html" class="hover:text-primary transition-colors">Sign Up</a>
+          <a href="login.html" class="hover:text-primary transition-colors">Log In</a>
+          <a href="#" class="hover:text-primary transition-colors">Help</a>
+        </div>
+        <p class="text-on-surface-variant text-xs opacity-50">&copy; 2025 Texting Factory Kenya</p>
+      </div>
+    </div>
+  </footer>
+
+<script>
+  // ════════════════════════════════════════════════════════════════════════
+  // Load user
+  // ════════════════════════════════════════════════════════════════════════
+  const user = JSON.parse(localStorage.getItem('swipechat_user') || '{}');
+  if (!user.phone) {
+    // No user data, go back to signup
+    window.location.href = 'signup.html';
+  }
+
+  const rawPhone = user.phone || '254700000000';
+  const formattedPhone = '+' + rawPhone.slice(0,3) + ' ' + rawPhone.slice(3,6) + ' ' + rawPhone.slice(6,9) + ' ' + rawPhone.slice(9);
+
+  document.getElementById('phoneDisplay').textContent = formattedPhone;
+  document.getElementById('phonePending').textContent = formattedPhone;
+
+  // ════════════════════════════════════════════════════════════════════════
+  // Step management
+  // ════════════════════════════════════════════════════════════════════════
+  function showStep(id) {
+    document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+
+    // Update progress indicator
+    if (id === 'step-waiting') {
+      document.getElementById('progressBar').style.width = '50%';
+      document.getElementById('stepLabel').textContent = 'Step 1 of 2 — Waiting for payment...';
+    } else if (id === 'step-confirmed') {
+      document.getElementById('progressBar').style.width = '100%';
+      document.getElementById('dot2').classList.replace('bg-surface-container','bg-secondary');
+      document.getElementById('dot2').classList.replace('text-on-surface-variant','text-on-secondary');
+      document.getElementById('dot2').textContent = '✓';
+      document.getElementById('stepLabel').textContent = 'Activated! Welcome to Texting Factory Kenya 🎉';
+    } else if (id === 'step-failed') {
+      document.getElementById('dot1').classList.replace('bg-primary','bg-error');
+      document.getElementById('stepLabel').textContent = 'Payment not completed';
+    }
+  }
+
+  function showError(title, message) {
+    document.getElementById('errorTitle').textContent = title;
+    document.getElementById('errorMsg').textContent = message;
+    document.getElementById('errorBox').classList.remove('hidden');
+  }
+
+  function hideError() {
+    document.getElementById('errorBox').classList.add('hidden');
+  }
+
+  // ════════════════════════════════════════════════════════════════════════
+  // Polling for payment confirmation
+  // ════════════════════════════════════════════════════════════════════════
+  let pollInterval = null;
+  let pollCount = 0;
+  const MAX_POLLS = 24;  // 24 × 5s = 2 minutes
+  let countdownSecs = 120;
+  let countdownInterval = null;
+
+  function startCountdown() {
+    countdownSecs = 120;
+    updateCountdownDisplay();
+    countdownInterval = setInterval(() => {
+      countdownSecs--;
+      updateCountdownDisplay();
+      if (countdownSecs <= 0) {
+        clearInterval(countdownInterval);
+      }
+    }, 1000);
+  }
+
+  function updateCountdownDisplay() {
+    const m = Math.floor(countdownSecs / 60);
+    const s = countdownSecs % 60;
+    document.getElementById('countdownDisplay').textContent = `${m}:${String(s).padStart(2,'0')}`;
+  }
+
+  function stopPolling() {
+    if (pollInterval) { clearInterval(pollInterval); pollInterval = null; }
+    if (countdownInterval) { clearInterval(countdownInterval); countdownInterval = null; }
+  }
+
+  async function startPolling(reference) {
+    pollCount = 0;
+    startCountdown();
+
+    pollInterval = setInterval(async () => {
+      pollCount++;
+      try {
+        const res = await fetch(`/api/stk-status/${encodeURIComponent(reference)}`);
+        const data = await res.json();
+
+        const resultCode = data.ResultCode !== undefined 
+          ? String(data.ResultCode) 
+          : (data.status || data.result_code || '');
+        const status = (data.status || data.payment_status || '').toLowerCase();
+
+        console.log('[Poll]', pollCount, { resultCode, status, data });
+
+        // Success indicators
+        if (resultCode === '0' || status === 'success' || status === 'completed' || status === 'paid') {
+          stopPolling();
+          onPaymentSuccess(data.reference || data.MpesaReceiptNumber || reference);
+          return;
+        }
+
+        // Failure indicators
+        if (resultCode === '1032' || status === 'cancelled') {
+          stopPolling();
+          document.getElementById('failureReason').textContent = 'You cancelled the M-Pesa prompt. Please try again when ready.';
+          showStep('step-failed');
+          return;
+        }
+
+        if (['failed','declined','rejected'].includes(status) || (resultCode && resultCode !== '0' && resultCode !== '' && resultCode !== 'pending')) {
+          stopPolling();
+          document.getElementById('failureReason').textContent = 
+            data.ResultDesc || data.message || 'The payment was not completed. Please try again.';
+          showStep('step-failed');
+          return;
+        }
+
+      } catch (e) {
+        console.warn('[Poll] Network error, will retry:', e.message);
+        // Network error — keep polling
+      }
+
+      // Timeout after MAX_POLLS
+      if (pollCount >= MAX_POLLS) {
+        stopPolling();
+        document.getElementById('failureReason').textContent = 
+          'The payment prompt timed out. Please try again.';
+        showStep('step-failed');
+      }
+    }, 5000);
+  }
+
+  function onPaymentSuccess(ref) {
+    document.getElementById('txRefDisplay').textContent = ref;
+    localStorage.setItem('swipechat_activated', 'true');
+    localStorage.setItem('swipechat_activation_payment', JSON.stringify({
+      ref, amount: 100, status: 'confirmed',
+      timestamp: new Date().toISOString()
+    }));
+    showStep('step-confirmed');
+  }
+
+  // ════════════════════════════════════════════════════════════════════════
+  // Send STK Push
+  // ════════════════════════════════════════════════════════════════════════
+  async function sendStkPush() {
+    hideError();
+    const btn = document.getElementById('payBtn');
+    const icon = document.getElementById('payBtnIcon');
+    const text = document.getElementById('payBtnText');
+
+    btn.disabled = true;
+    icon.outerHTML = '<span class="spinner-sm mr-1"></span>';
+    text.textContent = 'Sending prompt...';
+
+    try {
+      const res = await fetch('/api/stk-push', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ phone: rawPhone, amount: 100 })
+      });
+
+      const data = await res.json();
+      console.log('[STK Push Response]', data);
+
+      if (!res.ok || data.success === false) {
+        throw new Error(data.error || data.errorMessage || data.message || 'Payment request failed');
+      }
+
+      const reference = data.reference || data.CheckoutRequestID || data.checkout_request_id || data.id || 'REF_' + Date.now();
+      localStorage.setItem('swipechat_stk_ref', reference);
+
+      // Switch to waiting view
+      showStep('step-waiting');
+      startPolling(reference);
+
+    } catch (err) {
+      console.error('[STK Push Error]', err);
+      
+      // Re-enable button
+      const btnEl = document.getElementById('payBtn');
+      btnEl.disabled = false;
+      btnEl.innerHTML = `
+        <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">phone_iphone</span>
+        <span>Send M-Pesa Prompt (KES 100)</span>`;
+
+      showError('Could not send payment request', err.message || 'Please check your internet connection and try again.');
+    }
+  }
+
+  // ════════════════════════════════════════════════════════════════════════
+  // Event listeners
+  // ════════════════════════════════════════════════════════════════════════
+
+  document.getElementById('payBtn').addEventListener('click', sendStkPush);
+
+  document.getElementById('resendBtn').addEventListener('click', async () => {
+    stopPolling();
+    const btn = document.getElementById('resendBtn');
+    btn.disabled = true;
+    btn.textContent = 'Sending...';
+
+    try {
+      const res = await fetch('/api/stk-push', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ phone: rawPhone, amount: 100 })
+      });
+      const data = await res.json();
+
+      if (!res.ok || data.success === false) {
+        throw new Error(data.error || 'Resend failed');
+      }
+
+      const reference = data.reference || data.CheckoutRequestID || data.id || 'REF_' + Date.now();
+      localStorage.setItem('swipechat_stk_ref', reference);
+
+      // Add a "resent" line to the status log
+      const log = document.getElementById('statusLog');
+      const newRow = document.createElement('div');
+      newRow.className = 'flex items-center gap-2 text-sm text-secondary';
+      newRow.innerHTML = `<span class="material-symbols-outlined text-base" style="font-variation-settings:'FILL' 1;">refresh</span><span>New prompt sent — check your phone</span>`;
+      log.appendChild(newRow);
+
+      startPolling(reference);
+
+    } catch (err) {
+      console.error('[Resend]', err);
+    } finally {
+      btn.disabled = false;
+      btn.textContent = "Didn't receive the prompt? Resend";
+    }
+  });
+
+  document.getElementById('retryBtn').addEventListener('click', () => {
+    stopPolling();
+
+    // Reset step-pay button state
+    const btn = document.getElementById('payBtn');
+    btn.disabled = false;
+    btn.innerHTML = `
+      <span class="material-symbols-outlined" id="payBtnIcon" style="font-variation-settings:'FILL' 1;">phone_iphone</span>
+      <span id="payBtnText">Send M-Pesa Prompt (KES 100)</span>`;
+
+    // Reset progress
+    document.getElementById('progressBar').style.width = '0%';
+    document.getElementById('dot1').className = 'w-7 h-7 rounded-full bg-primary text-on-primary flex items-center justify-center text-xs font-bold shrink-0 transition-all';
+    document.getElementById('dot1').textContent = '1';
+    document.getElementById('stepLabel').textContent = 'Step 1 of 2 — Pay Activation Fee';
+
+    hideError();
+    showStep('step-pay');
+  });
+
+  document.getElementById('dashboardBtn').addEventListener('click', () => {
+    window.location.href = 'dashboard.html';
+  });
+
+  // ════════════════════════════════════════════════════════════════════════
+  // If they already activated, skip to dashboard
+  // ════════════════════════════════════════════════════════════════════════
+  if (localStorage.getItem('swipechat_activated') === 'true') {
+    window.location.href = 'dashboard.html';
+  }
+</script>
+</body>
+</html>

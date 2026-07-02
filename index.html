@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport">
+<meta name="description" content="Texting Factory Kenya - Earn 20 KES per message teaching Kiswahili to foreign clients. Join 10,000+ tutors and start earning from home with instant M-Pesa withdrawals.">
+<title>Texting Factory Kenya - Earn with Your Kiswahili Skills</title>
+<link rel="icon" type="image/svg+xml" href="logo-icon.svg">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "primary-fixed-dim":"#ffb4a8","outline-variant":"#e6bdb6","secondary":"#106e09",
+          "primary":"#8e0000","error":"#ba1a1a","inverse-on-surface":"#f3f0ef",
+          "surface-container":"#f0edec","tertiary-fixed-dim":"#f1c100","on-tertiary-fixed":"#241a00",
+          "on-primary-fixed":"#410000","surface":"#fcf9f8","tertiary-container":"#d0a600",
+          "surface-dim":"#dcd9d9","on-primary-fixed-variant":"#930000","inverse-surface":"#313030",
+          "background":"#fcf9f8","surface-bright":"#fcf9f8","on-tertiary-container":"#4f3d00",
+          "surface-container-low":"#f6f3f2","on-tertiary":"#ffffff","on-primary":"#ffffff",
+          "primary-container":"#bb0000","on-secondary-container":"#197411","on-secondary-fixed":"#002200",
+          "on-surface-variant":"#5d3f3b","on-secondary":"#ffffff","surface-container-lowest":"#ffffff",
+          "tertiary":"#745b00","primary-fixed":"#ffdad4","inverse-primary":"#ffb4a8",
+          "on-primary-container":"#ffc7be","secondary-fixed":"#9cf987","outline":"#916f69",
+          "on-background":"#1c1b1b","on-error":"#ffffff","tertiary-fixed":"#ffe08b",
+          "on-tertiary-fixed-variant":"#584400","on-surface":"#1c1b1b",
+          "surface-container-highest":"#e5e2e1","on-secondary-fixed-variant":"#005300",
+          "error-container":"#ffdad6","surface-container-high":"#ebe7e7",
+          "secondary-fixed-dim":"#81db6e","secondary-container":"#9cf987",
+          "on-error-container":"#93000a","surface-tint":"#bf0603","surface-variant":"#e5e2e1"
+        },
+        borderRadius: { "DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px" },
+        spacing: {
+          "stack-md":"16px","container-margin-desktop":"64px","container-margin-mobile":"16px",
+          "base":"8px","stack-sm":"8px","stack-lg":"32px","gutter":"16px"
+        },
+        fontFamily: {
+          "label-md":["Inter"],"headline-md":["Montserrat"],"headline-xl":["Montserrat"],
+          "headline-lg-mobile":["Montserrat"],"label-sm":["Inter"],"body-lg":["Inter"],
+          "headline-lg":["Montserrat"],"body-md":["Inter"]
+        },
+        fontSize: {
+          "label-md":["14px",{"lineHeight":"20px","fontWeight":"600"}],
+          "headline-md":["24px",{"lineHeight":"32px","fontWeight":"600"}],
+          "headline-xl":["40px",{"lineHeight":"48px","letterSpacing":"-0.02em","fontWeight":"700"}],
+          "headline-lg-mobile":["28px",{"lineHeight":"34px","fontWeight":"700"}],
+          "label-sm":["12px",{"lineHeight":"16px","fontWeight":"500"}],
+          "body-lg":["18px",{"lineHeight":"28px","fontWeight":"400"}],
+          "headline-lg":["32px",{"lineHeight":"40px","letterSpacing":"-0.01em","fontWeight":"700"}],
+          "body-md":["16px",{"lineHeight":"24px","fontWeight":"400"}]
+        }
+      }
+    }
+  }
+</script>
+<style>
+  .material-symbols-outlined { font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24; }
+  .indicator-strip-red { border-left: 4px solid #8e0000; }
+  .indicator-strip-green { border-left: 4px solid #106e09; }
+  .stk-pulse { animation: pulse-ring 2s cubic-bezier(0.4,0,0.6,1) infinite; }
+  @keyframes pulse-ring { 0%{transform:scale(0.95);opacity:0.5;} 50%{transform:scale(1.05);opacity:0.3;} 100%{transform:scale(0.95);opacity:0.5;} }
+  .float-animation { animation: float 4s ease-in-out infinite; }
+  @keyframes float { 0%,100%{transform:translateY(0px);} 50%{transform:translateY(-15px);} }
+  .hide-scrollbar::-webkit-scrollbar { display:none; }
+  .hide-scrollbar { -ms-overflow-style:none; scrollbar-width:none; }
+  body { background-color:#fcf9f8; color:#1c1b1b; }
+  .spinner-btn { border:3px solid rgba(255,255,255,0.3); border-top-color:#fff; border-radius:50%; width:20px; height:20px; animation:spin 0.7s linear infinite; display:inline-block; vertical-align:middle; }
+  @keyframes spin { to{transform:rotate(360deg);} }
+  /* Smooth hover transitions for interactive elements */
+  .btn-primary { transition: all 0.2s ease-in-out; }
+  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(142, 0, 0, 0.25); }
+  .btn-secondary { transition: all 0.2s ease-in-out; }
+  .btn-secondary:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(16, 110, 9, 0.25); }
+  .feature-card { transition: all 0.2s ease-in-out; }
+  .feature-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+  .nav-item { transition: all 0.15s ease-in-out; }
+  .nav-item:hover { background-color: #f0edec; }
+  /* Section spacing */
+  .section-spacing { padding-top: 3rem; padding-bottom: 3rem; }
+  /* Loading overlay */
+  .loading-overlay { position: fixed; inset: 0; background: rgba(252,249,248,0.9); display: flex; align-items: center; justify-content: center; z-index: 200; }
+  .loading-spinner { width: 40px; height: 40px; border: 4px solid #e6bdb6; border-top-color: #8e0000; border-radius: 50%; animation: spin 0.8s linear infinite; }
+  /* Fade-in animation for screens */
+  .fade-in { animation: fadeIn 0.3s ease-out; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+</style>
+</head>
+<body class="font-body-md text-body-md overflow-x-hidden min-h-screen">
+<div id="app-container">
+
+<!-- Loading overlay -->
+<div id="loading-overlay" class="loading-overlay hidden">
+  <div class="text-center">
+    <div class="loading-spinner mx-auto mb-4"></div>
+    <p class="font-label-md text-on-surface-variant">Loading...</p>
+  </div>
+</div>
+
+<!-- ========== SCREEN 1: LANDING ========== -->
+<section class="block" id="screen-landing">
+  <header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-4 h-16 bg-surface border-b border-outline-variant">
+    <div class="flex items-center gap-2">
+      <img src="logo-icon.svg" alt="Texting Factory" class="w-8 h-8">
+      <span class="font-headline-md font-bold text-primary">Texting Factory</span>
+    </div>
+    <button class="bg-primary text-on-primary px-6 py-2 rounded-full font-label-md btn-primary" onclick="showScreen('screen-signup')">Get Started</button>
+  </header>
+  <main class="pt-16">
+    <!-- Hero -->
+    <section class="relative min-h-[90vh] flex flex-col justify-center px-4 overflow-hidden">
+      <div class="absolute inset-0 z-0">
+        <div class="w-full h-full bg-cover bg-center bg-no-repeat" id="hero-bg" style="background-image:url('https://lh3.googleusercontent.com/aida-public/AB6AXuCheqfJLoAyspMU5i5MM8ZbcqEcyNPwlZkkJjVyv8siE0GfZ1igXePawnI0qfxLbkgSjeC9iam4rxzDETed-Za34syHDegnfm-fVoHxWPP0U_Q82wUQvV9z9vwuGQiQ4lM0vgoyJs3iSPrwBgwBJRxqaWAro_H5TsYWJaI6PtSiGpW-FsthcxWwC0AJW0gMFmYPv-AWAGVOJe3ICE6cMlEPDnkMYe_AxTvRNtXydcIPg5_n-g4iU12CM6TT9sov3WYjFnEFCfQwBLAV');"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+      </div>
+      <div class="relative z-10 max-w-md mx-auto text-center space-y-6 fade-in">
+        <h1 class="font-headline-xl text-headline-xl text-white leading-tight">Turn Your Kiswahili into Real <span class="text-secondary-fixed-dim">Earnings</span></h1>
+        <p class="font-body-lg text-body-lg text-white/90">Earn 20 KES per message teaching Kiswahili to foreign clients. No experience needed — just your phone.</p>
+        <div class="pt-4 space-y-3">
+          <button class="w-full py-4 rounded-xl bg-primary text-on-primary font-headline-md shadow-lg btn-primary flex items-center justify-center gap-2" onclick="showScreen('screen-signup')">
+            <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">rocket_launch</span>
+            Start Earning Now
+          </button>
+          <button class="w-full py-3 rounded-xl bg-white/10 border border-white/30 text-white font-label-md active:scale-95 transition-all" onclick="showScreen('screen-signup')">
+            Already have an account? <span class="underline">Log In</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section class="section-spacing px-4 bg-surface">
+      <h2 class="font-headline-lg-mobile text-on-surface text-center mb-8">Why Texting Factory Kenya?</h2>
+      <div class="grid grid-cols-1 gap-4 max-w-lg mx-auto">
+        <div class="bg-surface-container-lowest p-6 rounded-xl indicator-strip-green shadow-sm feature-card flex items-start gap-4">
+          <div class="bg-secondary-container p-3 rounded-lg flex-shrink-0"><span class="material-symbols-outlined text-on-secondary-container" style="font-variation-settings:'FILL' 1;">home</span></div>
+          <div><h3 class="font-label-md text-on-surface">Work from Home</h3><p class="text-on-surface-variant text-sm mt-1">Set your own hours. Chat anytime, anywhere — on your schedule.</p></div>
+        </div>
+        <div class="bg-surface-container-lowest p-6 rounded-xl indicator-strip-red shadow-sm feature-card flex items-start gap-4">
+          <div class="bg-primary-fixed p-3 rounded-lg flex-shrink-0"><span class="material-symbols-outlined text-on-primary-fixed" style="font-variation-settings:'FILL' 1;">payments</span></div>
+          <div><h3 class="font-label-md text-on-surface">Instant M-Pesa Pay</h3><p class="text-on-surface-variant text-sm mt-1">Withdraw directly to M-Pesa the moment you earn — no waiting.</p></div>
+        </div>
+        <div class="bg-surface-container-lowest p-6 rounded-xl indicator-strip-green shadow-sm feature-card flex items-start gap-4">
+          <div class="bg-secondary-container p-3 rounded-lg flex-shrink-0"><span class="material-symbols-outlined text-on-secondary-container" style="font-variation-settings:'FILL' 1;">people</span></div>
+          <div><h3 class="font-label-md text-on-surface">10,000+ Tutors</h3><p class="text-on-surface-variant text-sm mt-1">Join Kenya's largest community of Kiswahili tutors.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Banner -->
+    <section class="section-spacing px-4 bg-inverse-surface text-white text-center rounded-t-[3rem]">
+      <h2 class="font-headline-lg-mobile mb-4">Karibu — Your Earning Journey Starts Here</h2>
+      <p class="font-body-lg mb-10 text-white/80">Don't let your talent go to waste. Start earning from your conversations today.</p>
+      <button class="w-full max-w-sm mx-auto bg-primary py-5 rounded-2xl font-headline-md text-white shadow-xl btn-primary flex items-center justify-center gap-2" onclick="showScreen('screen-signup')">
+        <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">person_add</span>
+        Join Texting Factory Free
+      </button>
+      <div class="mt-8 flex justify-center items-center gap-2 text-secondary-fixed-dim">
+        <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">verified</span>
+        <span class="font-label-md">Trusted by 10,000+ Kenyans</span>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-surface border-t border-outline-variant">
+      <div class="max-w-4xl mx-auto px-4 py-12">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+          <!-- Brand -->
+          <div>
+            <div class="flex items-center gap-2 mb-3">
+              <span class="material-symbols-outlined text-primary text-2xl" style="font-variation-settings:'FILL' 1;">chat_bubble</span>
+              <span class="font-headline-md font-bold text-primary">Texting Factory</span>
+            </div>
+            <p class="text-on-surface-variant text-sm leading-relaxed">Kenya's leading platform for Kiswahili tutors. Earn by sharing your language skills with learners worldwide.</p>
+          </div>
+          <!-- Quick Links -->
+          <div>
+            <h4 class="font-label-md text-on-surface mb-3">Quick Links</h4>
+            <ul class="space-y-2">
+              <li><a href="index.html" class="text-on-surface-variant text-sm hover:text-primary transition-colors">Home</a></li>
+              <li><a href="signup.html" class="text-on-surface-variant text-sm hover:text-primary transition-colors">Sign Up</a></li>
+              <li><a href="login.html" class="text-on-surface-variant text-sm hover:text-primary transition-colors">Log In</a></li>
+              <li><a href="dashboard.html" class="text-on-surface-variant text-sm hover:text-primary transition-colors">Dashboard</a></li>
+            </ul>
+          </div>
+          <!-- Support & Legal -->
+          <div>
+            <h4 class="font-label-md text-on-surface mb-3">Support & Legal</h4>
+            <ul class="space-y-2">
+              <li><a href="#" class="text-on-surface-variant text-sm hover:text-primary transition-colors">Help Center</a></li>
+              <li><a href="#" class="text-on-surface-variant text-sm hover:text-primary transition-colors">Terms of Service</a></li>
+              <li><a href="#" class="text-on-surface-variant text-sm hover:text-primary transition-colors">Privacy Policy</a></li>
+              <li><a href="#" class="text-on-surface-variant text-sm hover:text-primary transition-colors">Contact Support</a></li>
+            </ul>
+          </div>
+        </div>
+        <!-- Bottom bar -->
+        <div class="border-t border-outline-variant pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
+          <p class="text-on-surface-variant text-xs">&copy; 2025 Texting Factory Kenya. All rights reserved.</p>
+          <div class="flex items-center gap-4">
+            <a href="#" class="text-on-surface-variant hover:text-primary transition-colors" aria-label="WhatsApp">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            </a>
+            <a href="#" class="text-on-surface-variant hover:text-primary transition-colors" aria-label="Email">
+              <span class="material-symbols-outlined text-xl">mail</span>
+            </a>
+            <a href="#" class="text-on-surface-variant hover:text-primary transition-colors" aria-label="Phone">
+              <span class="material-symbols-outlined text-xl">call</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </main>
+</section>
+
+<!-- ========== SCREEN 2: SIGNUP ========== -->
+<section class="hidden" id="screen-signup">
+  <nav class="fixed top-0 w-full z-50 flex items-center justify-between px-4 h-16 bg-surface border-b border-outline-variant">
+    <div class="flex items-center gap-2">
+      <img src="logo-icon.svg" alt="Texting Factory" class="w-8 h-8">
+      <span class="font-headline-md font-bold text-primary">Texting Factory</span>
+    </div>
+    <button class="text-primary font-label-md flex items-center gap-1 nav-item px-3 py-1 rounded-lg" onclick="showScreen('screen-landing')">
+      <span class="material-symbols-outlined text-sm">arrow_back</span> Back
+    </button>
+  </nav>
+  <main class="min-h-screen pt-16 flex items-center justify-center bg-surface-container-low px-4 py-8">
+    <div class="max-w-md w-full p-6 bg-surface-container-lowest rounded-xl shadow-lg border border-outline-variant fade-in">
+      <header class="mb-6">
+        <h1 class="font-headline-lg-mobile text-on-background mb-2">Create Your Tutor Account</h1>
+        <p class="font-body-md text-on-surface-variant">Start earning with Texting Factory today — it only takes a minute.</p>
+      </header>
+      <form class="space-y-4" id="signupForm" onsubmit="handleSignup(event)">
+        <!-- Full Name -->
+        <div>
+          <label class="block font-label-md text-on-surface-variant mb-1">Full Name</label>
+          <div class="flex items-center border border-outline rounded-lg px-3 py-2 bg-white focus-within:border-primary transition-colors">
+            <span class="material-symbols-outlined text-outline mr-2">person</span>
+            <input id="su-name" class="w-full border-none focus:ring-0 p-0 text-body-md outline-none" placeholder="e.g. John Kamau" required type="text">
+          </div>
+          <p class="text-error text-xs mt-1 hidden" id="su-name-err">Please enter your full name.</p>
+        </div>
+        <!-- Phone -->
+        <div>
+          <label class="block font-label-md text-on-surface-variant mb-1">M-Pesa Phone Number</label>
+          <div class="flex items-center border border-outline rounded-lg px-3 py-2 bg-white focus-within:border-primary transition-colors">
+            <span class="text-sm font-bold text-on-surface-variant mr-2">🇰🇪 +254</span>
+            <input id="su-phone" class="w-full border-none focus:ring-0 p-0 text-body-md outline-none" placeholder="7XX XXX XXX" maxlength="9" required type="tel">
+            <span class="ml-2 px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container text-[10px] font-bold uppercase">Secure</span>
+          </div>
+          <p class="text-error text-xs mt-1 hidden" id="su-phone-err">Enter a valid Safaricom number (e.g. 712345678).</p>
+        </div>
+        <!-- Password -->
+        <div>
+          <label class="block font-label-md text-on-surface-variant mb-1">Create Password</label>
+          <div class="flex items-center border border-outline rounded-lg px-3 py-2 bg-white focus-within:border-primary transition-colors">
+            <span class="material-symbols-outlined text-outline mr-2">lock</span>
+            <input id="su-password" class="w-full border-none focus:ring-0 p-0 text-body-md outline-none" placeholder="Min. 8 characters" required type="password">
+            <button type="button" onclick="togglePwd('su-password', this)" class="text-outline ml-2">
+              <span class="material-symbols-outlined text-sm">visibility</span>
+            </button>
+          </div>
+          <p class="text-error text-xs mt-1 hidden" id="su-pwd-err">Password must be at least 8 characters.</p>
+        </div>
+        <button class="w-full bg-primary text-on-primary font-headline-md py-4 rounded-lg shadow-md btn-primary flex items-center justify-center gap-2" type="submit">
+          Continue to Activation
+          <span class="material-symbols-outlined">arrow_forward</span>
+        </button>
+      </form>
+      <p class="text-center text-on-surface-variant text-sm mt-4">
+        Already have an account? <button class="text-primary font-semibold hover:underline" onclick="showScreen('screen-login')">Log In</button>
+      </p>
+    </div>
+  </main>
+</section>
+
+<!-- ========== SCREEN 2b: LOGIN ========== -->
+<section class="hidden" id="screen-login">
+  <nav class="fixed top-0 w-full z-50 flex items-center justify-between px-4 h-16 bg-surface border-b border-outline-variant">
+    <div class="flex items-center gap-2">
+      <img src="logo-icon.svg" alt="Texting Factory" class="w-8 h-8">
+      <span class="font-headline-md font-bold text-primary">Texting Factory</span>
+    </div>
+    <button class="text-primary font-label-md flex items-center gap-1 nav-item px-3 py-1 rounded-lg" onclick="showScreen('screen-landing')">
+      <span class="material-symbols-outlined text-sm">arrow_back</span> Back
+    </button>
+  </nav>
+  <main class="min-h-screen pt-16 flex items-center justify-center bg-surface-container-low px-4 py-8">
+    <div class="max-w-md w-full p-6 bg-surface-container-lowest rounded-xl shadow-lg border border-outline-variant fade-in">
+      <header class="mb-6">
+        <h1 class="font-headline-lg-mobile text-on-background mb-2">Welcome Back!</h1>
+        <p class="font-body-md text-on-surface-variant">Log in to continue earning with Texting Factory.</p>
+      </header>
+      <form class="space-y-4" onsubmit="handleLogin(event)">
+        <div>
+          <label class="block font-label-md text-on-surface-variant mb-1">Phone Number</label>
+          <div class="flex items-center border border-outline rounded-lg px-3 py-2 bg-white focus-within:border-primary transition-colors">
+            <span class="text-sm font-bold text-on-surface-variant mr-2">🇰🇪 +254</span>
+            <input id="li-phone" class="w-full border-none focus:ring-0 p-0 text-body-md outline-none" placeholder="7XX XXX XXX" maxlength="9" required type="tel">
+          </div>
+        </div>
+        <div>
+          <label class="block font-label-md text-on-surface-variant mb-1">Password</label>
+          <div class="flex items-center border border-outline rounded-lg px-3 py-2 bg-white focus-within:border-primary transition-colors">
+            <span class="material-symbols-outlined text-outline mr-2">lock</span>
+            <input id="li-password" class="w-full border-none focus:ring-0 p-0 text-body-md outline-none" placeholder="Your password" required type="password">
+            <button type="button" onclick="togglePwd('li-password', this)" class="text-outline ml-2">
+              <span class="material-symbols-outlined text-sm">visibility</span>
+            </button>
+          </div>
+        </div>
+        <p class="text-error text-xs hidden" id="li-error">No account found with this number. Please sign up first.</p>
+        <button class="w-full bg-primary text-on-primary font-headline-md py-4 rounded-lg shadow-md btn-primary flex items-center justify-center gap-2" type="submit">
+          Log In <span class="material-symbols-outlined">arrow_forward</span>
+        </button>
+      </form>
+      <p class="text-center text-on-surface-variant text-sm mt-4">
+        Don't have an account? <button class="text-primary font-semibold hover:underline" onclick="showScreen('screen-signup')">Sign Up</button>
+      </p>
+    </div>
+  </main>
+</section>
+
+<!-- ========== SCREEN 3: ACTIVATION (STK Push + OTP) ========== -->
+<section class="hidden" id="screen-activation">
+  <nav class="fixed top-0 w-full z-50 bg-surface border-b border-outline-variant flex items-center justify-between px-4 h-16">
+    <div class="flex items-center gap-2">
+      <img src="logo-icon.svg" alt="Texting Factory" class="w-8 h-8">
+      <span class="font-headline-md font-bold text-primary">Texting Factory</span>
+    </div>
+    <div class="flex gap-2">
+      <div id="act-dot1" class="w-7 h-7 rounded-full bg-primary text-on-primary flex items-center justify-center text-xs font-bold">1</div>
+      <div class="w-6 h-1 bg-outline-variant self-center rounded"></div>
+      <div id="act-dot2" class="w-7 h-7 rounded-full bg-surface-container text-on-surface-variant flex items-center justify-center text-xs font-bold">2</div>
+    </div>
+  </nav>
+
+  <main class="pt-24 pb-8 px-4 max-w-4xl mx-auto w-full flex flex-col items-center min-h-screen">
+    <!-- Step 1: Payment -->
+    <div id="act-step1" class="fade-in">
+      <section class="text-center mb-8">
+        <h1 class="font-headline-lg-mobile text-primary mb-2">Activate Your Account</h1>
+        <div class="w-16 h-1 bg-primary mx-auto rounded-full mb-4"></div>
+        <p class="font-body-lg text-on-surface-variant max-w-lg mx-auto">
+          A one-time fee of <strong>KES 100</strong> unlocks unlimited earning opportunities.
+        </p>
+      </section>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full mb-8">
+        <!-- Visual -->
+        <div class="bg-surface-container-low border border-outline-variant rounded-xl p-8 flex flex-col items-center justify-center min-h-[280px]" id="payment-status-card">
+          <div class="flex flex-col items-center" id="idle-visual">
+            <div class="w-32 h-32 float-animation">
+              <img class="w-full h-full object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCB-FXKkDo0ad52ZBTjUay1WCqh1dTuxLFZIrr5fw-vkWnUUdgBlSKcDdj-4VkIR8iryMcYnQdkVX42R3Knk-BJrPsMcDxt2usVDdBCq5j_Tq4fRuUOnvwOzfePyEyudiUbnDndqJ47TgCtKs2vwlpGWfx1Q0EuJXG1z6POudnZlrzUCSZlLkDioA7HnWr1r2_phHNLfJ0_wwG9YZOBKYypnAOKRZJD3Bk6vL7iMcKNpg71oWuAyHajPk9HrYKAr-5Gaam51rA7yyvJ" alt="M-Pesa"/>
+            </div>
+            <p class="mt-4 font-label-md text-on-surface-variant">Ready to activate</p>
+          </div>
+          <div class="hidden flex-col items-center" id="waiting-visual">
+            <div class="relative w-28 h-28 flex items-center justify-center">
+              <div class="absolute inset-0 bg-secondary opacity-20 rounded-full stk-pulse"></div>
+              <span class="material-symbols-outlined text-secondary text-6xl" style="font-variation-settings:'FILL' 1;">phone_iphone</span>
+            </div>
+            <p class="mt-6 font-headline-md text-secondary font-bold">Waiting for Payment...</p>
+            <p class="text-on-surface-variant text-sm mt-1">Check your phone and approve the M-Pesa prompt.</p>
+          </div>
+        </div>
+
+        <!-- Payment card -->
+        <div class="bg-white border border-outline-variant rounded-xl p-6 flex flex-col shadow-sm">
+          <div class="flex items-center mb-4">
+            <span class="bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full font-label-md">Special Offer</span>
+          </div>
+          <h3 class="font-headline-md mb-3">Payment Details</h3>
+          <ul class="space-y-2 mb-6 flex-grow text-sm">
+            <li class="flex items-start gap-2"><span class="material-symbols-outlined text-secondary text-base" style="font-variation-settings:'FILL' 1;">check_circle</span><span>One-time fee: <strong>KES 100</strong></span></li>
+            <li class="flex items-start gap-2"><span class="material-symbols-outlined text-secondary text-base" style="font-variation-settings:'FILL' 1;">check_circle</span><span>Lifetime account access</span></li>
+            <li class="flex items-start gap-2"><span class="material-symbols-outlined text-secondary text-base" style="font-variation-settings:'FILL' 1;">check_circle</span><span>Instant M-Pesa STK push</span></li>
+            <li class="flex items-start gap-2"><span class="material-symbols-outlined text-secondary text-base" style="font-variation-settings:'FILL' 1;">check_circle</span><span>Secured via M-Pesa</span></li>
+          </ul>
+          <div class="bg-primary-fixed rounded-lg p-3 mb-4 flex items-center justify-between">
+            <div>
+              <p class="text-xs text-on-primary-fixed-variant font-semibold uppercase tracking-wide">Sending STK to</p>
+              <p class="font-bold text-on-surface" id="act-phone-display">+254 7XX XXX XXX</p>
+            </div>
+            <span class="material-symbols-outlined text-primary" style="font-variation-settings:'FILL' 1;">smartphone</span>
+          </div>
+          <button class="w-full h-14 bg-primary text-on-primary font-bold rounded-lg btn-primary flex items-center justify-center gap-2" id="pay-btn" onclick="handlePayment()">
+            <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">payments</span>
+            Pay KES 100 via M-Pesa
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 2: OTP after payment -->
+    <div id="act-step2" class="hidden w-full max-w-md fade-in">
+      <div class="bg-secondary-container text-on-secondary-container rounded-xl px-4 py-3 mb-6 flex items-center gap-3">
+        <span class="material-symbols-outlined text-secondary text-2xl" style="font-variation-settings:'FILL' 1;">check_circle</span>
+        <div>
+          <p class="font-bold text-sm">Payment Confirmed!</p>
+          <p class="text-xs">KES 100 received via Paynecta · Ref: <span id="act-tx-ref">PNT_DEMO</span></p>
+        </div>
+      </div>
+      <div class="bg-surface-container-lowest rounded-2xl shadow-md border border-outline-variant p-8 text-center">
+        <div class="w-16 h-16 bg-primary-fixed rounded-full flex items-center justify-center mx-auto mb-4">
+          <span class="material-symbols-outlined text-primary text-4xl" style="font-variation-settings:'FILL' 1;">mark_email_read</span>
+        </div>
+        <h2 class="text-2xl font-bold mb-2">Account Activated!</h2>
+        <p class="text-on-surface-variant text-sm mb-6" id="act-email-hint">Your payment was received. Click below to go to your dashboard.</p>
+        <div class="flex justify-center gap-2 mb-6" id="otpContainer">
+          <input class="w-11 h-14 text-center text-2xl font-bold rounded-xl border border-outline-variant bg-white focus:ring-2 focus:ring-primary outline-none transition-colors" maxlength="1" type="text" inputmode="numeric"/>
+          <input class="w-11 h-14 text-center text-2xl font-bold rounded-xl border border-outline-variant bg-white focus:ring-2 focus:ring-primary outline-none transition-colors" maxlength="1" type="text" inputmode="numeric"/>
+          <input class="w-11 h-14 text-center text-2xl font-bold rounded-xl border border-outline-variant bg-white focus:ring-2 focus:ring-primary outline-none transition-colors" maxlength="1" type="text" inputmode="numeric"/>
+          <input class="w-11 h-14 text-center text-2xl font-bold rounded-xl border border-outline-variant bg-white focus:ring-2 focus:ring-primary outline-none transition-colors" maxlength="1" type="text" inputmode="numeric"/>
+          <input class="w-11 h-14 text-center text-2xl font-bold rounded-xl border border-outline-variant bg-white focus:ring-2 focus:ring-primary outline-none transition-colors" maxlength="1" type="text" inputmode="numeric"/>
+          <input class="w-11 h-14 text-center text-2xl font-bold rounded-xl border border-outline-variant bg-white focus:ring-2 focus:ring-primary outline-none transition-colors" maxlength="1" type="text" inputmode="numeric"/>
+        </div>
+        <div class="bg-secondary-container text-on-secondary-container rounded-lg px-4 py-2 text-sm mb-4 text-left">
+          <span class="material-symbols-outlined text-sm">info</span>
+          <strong>Demo:</strong> Use code <strong>123456</strong> to complete activation.
+        </div>
+        <p class="text-error text-sm mb-4 hidden" id="otp-error">Invalid code. Please try again.</p>
+        <button id="activateBtn" class="w-full bg-primary text-on-primary font-semibold py-3 rounded-xl btn-primary shadow-md">
+          Activate Account
+        </button>
+        <p class="text-on-surface-variant text-sm mt-4">
+          Didn't receive it? <button class="text-primary font-semibold hover:underline" id="resendOtpBtn">Resend Code</button>
+        </p>
+        <p class="text-secondary text-sm mt-2 hidden" id="resend-msg">Code resent successfully!</p>
+      </div>
+    </div>
+  </main>
+</section>
+
+<!-- ========== SCREEN 4: DASHBOARD ========== -->
+<section class="hidden" id="screen-dashboard">
+  <header class="fixed top-0 w-full z-50 bg-surface shadow-sm h-16 flex items-center px-4 justify-between">
+    <div class="flex items-center gap-3">
+      <button onclick="toggleDrawer()" class="material-symbols-outlined text-primary p-2 hover:bg-surface-container-high rounded-full transition-colors">menu</button>
+      <h1 class="font-headline-md font-bold text-primary">Texting Factory Kenya</h1>
+    </div>
+    <div class="flex items-center gap-2">
+      <span class="hidden md:block text-sm font-semibold text-on-surface-variant" id="dash-greeting">Hello!</span>
+      <div class="w-10 h-10 rounded-full bg-primary border-2 border-primary-fixed flex items-center justify-center text-white font-bold text-sm" id="dash-avatar">JK</div>
+    </div>
+  </header>
+
+  <main class="pt-20 pb-28 px-4 max-w-lg mx-auto space-y-6 min-h-screen">
+    <!-- Welcome banner -->
+    <div class="bg-primary text-on-primary rounded-2xl p-5 flex items-center gap-4 shadow-lg mt-2">
+      <div class="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center font-bold text-xl flex-shrink-0" id="dash-banner-avatar">JK</div>
+      <div>
+        <h2 class="text-xl font-bold" id="dash-welcome">Welcome, John!</h2>
+        <p class="text-sm opacity-80">Your account is active. Start earning today!</p>
+      </div>
+      <span class="ml-auto material-symbols-outlined text-4xl opacity-30" style="font-variation-settings:'FILL' 1;">waving_hand</span>
+    </div>
+
+    <!-- Earnings card -->
+    <div class="bg-surface-container-lowest rounded-xl p-5 border border-outline-variant shadow-sm relative overflow-hidden">
+      <div class="absolute left-0 top-0 bottom-0 w-1 bg-primary rounded-l-xl"></div>
+      <div class="flex justify-between items-start mb-4 pl-2">
+        <div>
+          <p class="text-label-sm uppercase tracking-wider text-on-surface-variant">Today's Earnings</p>
+          <p class="font-headline-xl text-primary mt-1">460 KES</p>
+        </div>
+        <div class="bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full text-label-sm font-bold flex items-center gap-1">
+          <span class="material-symbols-outlined text-sm">trending_up</span> +12%
+        </div>
+      </div>
+      <button class="w-full bg-secondary text-on-secondary font-bold py-4 rounded-xl btn-secondary flex items-center justify-center gap-2">
+        <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">payments</span>
+        Withdraw via M-Pesa
+      </button>
+    </div>
+
+    <!-- Stats -->
+    <div class="grid grid-cols-3 gap-3">
+      <div class="bg-surface-container-lowest rounded-xl p-4 border border-outline-variant text-center shadow-sm feature-card">
+        <span class="material-symbols-outlined text-primary" style="font-variation-settings:'FILL' 1;">local_fire_department</span>
+        <p class="text-xl font-bold text-primary mt-1">0</p>
+        <p class="text-xs text-on-surface-variant font-semibold uppercase tracking-wide">Streak</p>
+      </div>
+      <div class="bg-surface-container-lowest rounded-xl p-4 border border-outline-variant text-center shadow-sm feature-card">
+        <span class="material-symbols-outlined text-secondary" style="font-variation-settings:'FILL' 1;">chat_bubble</span>
+        <p class="text-xl font-bold text-secondary mt-1">0</p>
+        <p class="text-xs text-on-surface-variant font-semibold uppercase tracking-wide">Chats</p>
+      </div>
+      <div class="bg-surface-container-lowest rounded-xl p-4 border border-outline-variant text-center shadow-sm feature-card">
+        <span class="material-symbols-outlined text-tertiary" style="font-variation-settings:'FILL' 1;">star</span>
+        <p class="text-xl font-bold text-tertiary mt-1">5</p>
+        <p class="text-xs text-on-surface-variant font-semibold uppercase tracking-wide">Level</p>
+      </div>
+    </div>
+
+    <!-- New Chats -->
+    <div>
+      <h3 class="font-headline-md mb-4">New Conversations</h3>
+      <div class="flex gap-4 overflow-x-auto hide-scrollbar pb-2 -mx-4 px-4">
+        <div class="min-w-[180px] bg-white border border-outline-variant rounded-xl p-4 shadow-sm flex-shrink-0 feature-card">
+          <div class="w-10 h-10 rounded-full bg-surface-container-high overflow-hidden mb-3">
+            <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuASUQ3NEeRsYHLCzfQGzsEoNsuHmIOAb2NoWxl2zgcGt_BF5YnR6xO9lDcb2ukZ5XAXGlpCVd9qcmoAYD6v9MGnDsvsX8_61pnrCDxpd-rtJaGCWMWQsZj5fFfEYWe8m9_mRtbZqFtv9Z2GY4E6PMYrIJe_7BH0ztZqAcIGZtNaJSM4s8XzEMOYilAnUxSmG1-8eBkbp3BTymy4HFV_V6taD-smhKTZsA1Uf24SeK_6SXqt0LW8R5Ukq1Ese8C8KLA5J6Pkhc0TMf--" alt="James"/>
+          </div>
+          <p class="font-bold text-sm mb-1">James (USA)</p>
+          <p class="text-xs text-on-surface-variant mb-2">Wants to learn greetings</p>
+          <div class="bg-secondary-container text-on-secondary-container text-center py-1.5 rounded-lg font-bold text-label-sm">Earn 20 KES</div>
+        </div>
+        <div class="min-w-[180px] bg-white border border-outline-variant rounded-xl p-4 shadow-sm flex-shrink-0 feature-card">
+          <div class="w-10 h-10 rounded-full bg-surface-container-high overflow-hidden mb-3 bg-primary flex items-center justify-center text-white font-bold">S</div>
+          <p class="font-bold text-sm mb-1">Sarah (UK)</p>
+          <p class="text-xs text-on-surface-variant mb-2">Needs business phrases</p>
+          <div class="bg-secondary-container text-on-secondary-container text-center py-1.5 rounded-lg font-bold text-label-sm">Earn 20 KES</div>
+        </div>
+        <div class="min-w-[180px] bg-white border border-outline-variant rounded-xl p-4 shadow-sm flex-shrink-0 feature-card">
+          <div class="w-10 h-10 rounded-full bg-surface-container-high overflow-hidden mb-3 bg-tertiary flex items-center justify-center text-white font-bold">M</div>
+          <p class="font-bold text-sm mb-1">Marc (France)</p>
+          <p class="text-xs text-on-surface-variant mb-2">Daily conversation practice</p>
+          <div class="bg-secondary-container text-on-secondary-container text-center py-1.5 rounded-lg font-bold text-label-sm">Earn 20 KES</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Learner Directory link -->
+    <a href="learners.html" class="flex items-center justify-between bg-surface-container-lowest rounded-xl p-5 border border-outline-variant shadow-sm feature-card">
+      <div class="flex items-center gap-3">
+        <span class="material-symbols-outlined text-primary text-3xl" style="font-variation-settings:'FILL' 1;">people</span>
+        <div>
+          <p class="font-semibold text-on-surface">Learner Directory</p>
+          <p class="text-xs text-on-surface-variant">Browse all Western learners</p>
+        </div>
+      </div>
+      <span class="material-symbols-outlined text-outline">chevron_right</span>
+    </a>
+  </main>
+
+  <!-- Bottom Navigation -->
+  <nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-2 py-3 bg-surface border-t border-outline-variant shadow-lg">
+    <button class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1 nav-item" onclick="showScreen('screen-dashboard')">
+      <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">home</span>
+      <span class="font-label-sm">Home</span>
+    </button>
+    <button class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 nav-item" onclick="showScreen('screen-payments')">
+      <span class="material-symbols-outlined">payments</span>
+      <span class="font-label-sm">Payments</span>
+    </button>
+    <button class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 nav-item">
+      <span class="material-symbols-outlined">chat_bubble</span>
+      <span class="font-label-sm">Chats</span>
+    </button>
+    <button class="flex flex-col items-center justify-center text-on-surface-variant px-4 py-1 nav-item">
+      <span class="material-symbols-outlined">person</span>
+      <span class="font-label-sm">Profile</span>
+    </button>
+  </nav>
+</section>
+
+<!-- ========== SCREEN 5: PAYMENTS ========== -->
+<section class="hidden" id="screen-payments">
+  <header class="fixed top-0 w-full z-50 bg-surface shadow-sm h-16 flex items-center px-4 justify-between">
+    <div class="flex items-center gap-3">
+      <button onclick="showScreen('screen-dashboard')" class="material-symbols-outlined text-primary p-2 nav-item rounded-full">arrow_back</button>
+      <h1 class="font-headline-md font-bold text-primary">Payments</h1>
+    </div>
+    <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white font-bold text-sm" id="pay-avatar">JK</div>
+  </header>
+  <main class="pt-20 pb-28 px-4 max-w-lg mx-auto space-y-6 min-h-screen">
+    <!-- Balance -->
+    <div class="bg-primary text-on-primary rounded-2xl p-6 shadow-lg flex flex-col md:flex-row md:items-center md:justify-between gap-4 mt-2">
+      <div>
+        <p class="text-sm opacity-80 uppercase tracking-widest font-semibold">Available Balance</p>
+        <p class="text-4xl font-extrabold mt-1">KES 460.00</p>
+        <p class="text-sm opacity-70 mt-1">Linked M-Pesa account</p>
+      </div>
+      <button class="bg-white text-primary font-bold px-6 py-3 rounded-xl shadow btn-primary self-start">
+        <span class="material-symbols-outlined align-middle mr-1" style="font-variation-settings:'FILL' 1;">account_balance_wallet</span>
+        Withdraw
+      </button>
+    </div>
+
+    <!-- Send payment form -->
+    <div class="bg-surface-container-lowest rounded-2xl border border-outline-variant shadow-sm p-6">
+      <h3 class="text-lg font-bold mb-4 flex items-center gap-2">
+        <span class="material-symbols-outlined text-primary" style="font-variation-settings:'FILL' 1;">send_money</span>
+        Send a Payment
+      </h3>
+      <form id="payForm" onsubmit="handleSendPayment(event)" class="space-y-4">
+        <div>
+          <label class="block text-sm font-semibold text-on-surface-variant mb-1">Recipient Phone / Email</label>
+          <input id="pay-recipient" type="text" placeholder="0712345678 or email@example.com"
+            class="w-full px-4 py-3 rounded-xl border border-outline-variant bg-white focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all"/>
+          <p class="text-error text-xs mt-1 hidden" id="pay-recipient-err">Please enter a valid recipient.</p>
+        </div>
+        <div>
+          <label class="block text-sm font-semibold text-on-surface-variant mb-1">Amount (KES)</label>
+          <input id="pay-amount" type="number" min="1" placeholder="e.g. 500"
+            class="w-full px-4 py-3 rounded-xl border border-outline-variant bg-white focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all"/>
+          <p class="text-error text-xs mt-1 hidden" id="pay-amount-err">Please enter a valid amount.</p>
+        </div>
+        <div>
+          <label class="block text-sm font-semibold text-on-surface-variant mb-1">Description</label>
+          <input id="pay-desc" type="text" placeholder="e.g. Lesson payment - Week 1"
+            class="w-full px-4 py-3 rounded-xl border border-outline-variant bg-white focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all"/>
+        </div>
+        <button type="submit" id="paySubmitBtn"
+          class="w-full bg-primary text-on-primary font-semibold py-3 rounded-xl btn-primary shadow-md">
+          Send via Paynecta
+        </button>
+      </form>
+    </div>
+
+    <!-- Payment Info -->
+    <div class="bg-surface-container-lowest rounded-2xl border border-outline-variant shadow-sm p-6 space-y-3">
+      <h3 class="text-lg font-bold flex items-center gap-2">
+        <span class="material-symbols-outlined text-secondary" style="font-variation-settings:'FILL' 1;">verified_user</span>
+        Payment Info
+      </h3>
+      <div class="flex items-center gap-3 p-3 bg-surface-container rounded-xl">
+        <span class="material-symbols-outlined text-secondary" style="font-variation-settings:'FILL' 1;">lock</span>
+        <p class="text-sm text-on-surface-variant">All payments are processed securely via M-Pesa.</p>
+      </div>
+    </div>
+
+    <!-- Transaction history -->
+    <div>
+      <h3 class="font-bold text-on-surface mb-3">Transaction History</h3>
+      <div class="bg-surface-container-lowest rounded-2xl border border-outline-variant shadow-sm overflow-hidden" id="tx-list">
+        <div class="p-8 text-center text-on-surface-variant">
+          <span class="material-symbols-outlined text-4xl mb-2 block opacity-40">receipt_long</span>
+          No transactions yet.
+        </div>
+      </div>
+    </div>
+  </main>
+  <!-- Toast -->
+  <div id="pay-toast" class="fixed bottom-8 left-1/2 -translate-x-1/2 bg-secondary text-on-secondary px-6 py-3 rounded-full shadow-lg font-semibold text-sm hidden z-50 transition-all duration-300">
+    ✓ Payment sent successfully via Paynecta!
+  </div>
+</section>
+
+<!-- ========== SIDEBAR DRAWER ========== -->
+<aside class="hidden fixed left-0 top-0 h-full w-80 z-[100] bg-surface-container-low shadow-2xl transition-transform -translate-x-full" id="drawer">
+  <div class="p-6 flex flex-col h-full gap-4">
+    <div class="flex items-center gap-4 mb-6">
+      <div class="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white font-bold text-xl" id="drawer-avatar">JK</div>
+      <div>
+        <h4 class="font-bold text-on-surface" id="drawer-name">User</h4>
+        <p class="text-sm text-on-surface-variant" id="drawer-phone">+254 7XX XXX XXX</p>
+      </div>
+    </div>
+    <nav class="flex flex-col gap-2">
+      <button onclick="showScreen('screen-dashboard');toggleDrawer()" class="flex items-center gap-3 p-3 bg-primary-container text-on-primary font-bold rounded-lg nav-item">
+        <span class="material-symbols-outlined">dashboard</span> Dashboard
+      </button>
+      <button onclick="showScreen('screen-payments');toggleDrawer()" class="flex items-center gap-3 p-3 text-on-surface-variant nav-item rounded-lg">
+        <span class="material-symbols-outlined">payments</span> Payments
+      </button>
+      <a href="learners.html" class="flex items-center gap-3 p-3 text-on-surface-variant nav-item rounded-lg">
+        <span class="material-symbols-outlined">people</span> Learner Directory
+      </a>
+      <button class="flex items-center gap-3 p-3 text-on-surface-variant nav-item rounded-lg">
+        <span class="material-symbols-outlined">translate</span> Translation Tools
+      </button>
+      <button class="flex items-center gap-3 p-3 text-on-surface-variant nav-item rounded-lg">
+        <span class="material-symbols-outlined">help_outline</span> Help Center
+      </button>
+    </nav>
+    <div class="mt-auto">
+      <button onclick="handleLogout()" class="flex items-center gap-3 p-3 text-error hover:bg-error-container rounded-lg w-full nav-item">
+        <span class="material-symbols-outlined">logout</span> Logout
+      </button>
+    </div>
+  </div>
+</aside>
+<div id="drawer-overlay" class="hidden fixed inset-0 bg-black/30 z-[99]" onclick="toggleDrawer()"></div>
+
+</div><!-- end app-container -->
+
+<script>
+  // ── Paynecta config ──────────────────────────────
+  // Payment processing is handled server-side
+
+  // ── Screen navigation ────────────────────────────
+  const SCREENS = ['screen-landing','screen-signup','screen-login','screen-activation','screen-dashboard','screen-payments'];
+  function showScreen(id) {
+    SCREENS.forEach(s => { const el = document.getElementById(s); if(el) el.classList.add('hidden'); });
+    const target = document.getElementById(id);
+    if(target) { target.classList.remove('hidden'); window.scrollTo(0,0); }
+    refreshDashboard();
+  }
+
+  // ── Loading overlay ──────────────────────────────
+  function showLoading(message) {
+    const overlay = document.getElementById('loading-overlay');
+    const text = overlay.querySelector('p');
+    if(text) text.textContent = message || 'Loading...';
+    overlay.classList.remove('hidden');
+  }
+  function hideLoading() {
+    document.getElementById('loading-overlay').classList.add('hidden');
+  }
+
+  // ── Drawer ────────────────────────────────────────
+  let drawerOpen = false;
+  function toggleDrawer() {
+    drawerOpen = !drawerOpen;
+    const drawer = document.getElementById('drawer');
+    const overlay = document.getElementById('drawer-overlay');
+    if(drawerOpen) {
+      drawer.classList.remove('hidden','-translate-x-full');
+      overlay.classList.remove('hidden');
+    } else {
+      drawer.classList.add('-translate-x-full');
+      overlay.classList.add('hidden');
+      setTimeout(()=>drawer.classList.add('hidden'),300);
+    }
+  }
+
+  // ── Password toggle ───────────────────────────────
+  function togglePwd(inputId, btn) {
+    const input = document.getElementById(inputId);
+    const icon = btn.querySelector('.material-symbols-outlined');
+    const isText = input.type === 'text';
+    input.type = isText ? 'password' : 'text';
+    icon.textContent = isText ? 'visibility' : 'visibility_off';
+  }
+
+  // ── Signup ────────────────────────────────────────
+  function handleSignup(e) {
+    e.preventDefault();
+    let valid = true;
+    const name  = document.getElementById('su-name').value.trim();
+    const phone = document.getElementById('su-phone').value.trim();
+    const pwd   = document.getElementById('su-password').value;
+    document.querySelectorAll('[id$="-err"]').forEach(el=>el.classList.add('hidden'));
+    if(!name) { document.getElementById('su-name-err').classList.remove('hidden'); valid=false; }
+    if(!phone || !/^(7|1)\d{8}$/.test(phone)) { document.getElementById('su-phone-err').classList.remove('hidden'); valid=false; }
+    if(pwd.length < 8) { document.getElementById('su-pwd-err').classList.remove('hidden'); valid=false; }
+    if(!valid) return;
+    localStorage.setItem('swipechat_user', JSON.stringify({ name, phone:'254'+phone }));
+    const formatted = '+254 '+phone.slice(0,3)+' '+phone.slice(3,6)+' '+phone.slice(6);
+    document.getElementById('act-phone-display').textContent = formatted;
+    showScreen('screen-activation');
+  }
+
+  // ── Login ─────────────────────────────────────────
+  function handleLogin(e) {
+    e.preventDefault();
+    const phone = document.getElementById('li-phone').value.trim();
+    const stored = JSON.parse(localStorage.getItem('swipechat_user')||'{}');
+    document.getElementById('li-error').classList.add('hidden');
+    if(stored.phone && stored.phone === '254'+phone) {
+      showScreen('screen-dashboard');
+    } else {
+      document.getElementById('li-error').classList.remove('hidden');
+    }
+  }
+
+  // ── STK Push / Activation payment ────────────────
+  function handlePayment() {
+    const idle    = document.getElementById('idle-visual');
+    const waiting = document.getElementById('waiting-visual');
+    const btn     = document.getElementById('pay-btn');
+    idle.classList.add('hidden');
+    waiting.classList.remove('hidden');
+    waiting.classList.add('flex');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner-btn"></span> Pushing STK...';
+
+    // Simulate Paynecta STK push → confirmed after 3s
+    setTimeout(() => {
+      const ref = 'PNT_' + Math.random().toString(36).substr(2,8).toUpperCase();
+      localStorage.setItem('swipechat_activation_payment', JSON.stringify({ ref, amount:100, status:'confirmed' }));
+      document.getElementById('act-tx-ref').textContent = ref;
+
+      // Flip to step 2 (OTP)
+      document.getElementById('act-step1').classList.add('hidden');
+      document.getElementById('act-step2').classList.remove('hidden');
+      document.getElementById('act-dot1').classList.replace('bg-primary','bg-secondary');
+      document.getElementById('act-dot1').classList.replace('text-on-primary','text-on-secondary');
+      document.getElementById('act-dot1').textContent = '✓';
+      document.getElementById('act-dot2').classList.replace('bg-surface-container','bg-primary');
+      document.getElementById('act-dot2').classList.replace('text-on-surface-variant','text-on-primary');
+
+      const user = JSON.parse(localStorage.getItem('swipechat_user')||'{}');
+      if(user.phone) {
+        document.getElementById('act-email-hint').textContent = 'Enter the 6-digit code sent to your registered contact.';
+      }
+      document.querySelectorAll('#otpContainer input')[0].focus();
+    }, 3000);
+  }
+
+  // ── OTP inputs ────────────────────────────────────
+  document.addEventListener('DOMContentLoaded', () => {
+    const inputs = document.querySelectorAll('#otpContainer input');
+    inputs.forEach((input, i) => {
+      input.addEventListener('input', () => {
+        input.value = input.value.replace(/\D/g,'');
+        if(input.value && i < inputs.length-1) inputs[i+1].focus();
+      });
+      input.addEventListener('keydown', (e) => {
+        if(e.key==='Backspace' && !input.value && i>0) inputs[i-1].focus();
+      });
+    });
+
+    document.getElementById('activateBtn').addEventListener('click', () => {
+      const code = Array.from(inputs).map(i=>i.value).join('');
+      if(code === '123456') {
+        localStorage.setItem('swipechat_activated','true');
+        showScreen('screen-dashboard');
+      } else {
+        document.getElementById('otp-error').classList.remove('hidden');
+        inputs.forEach(i=>{ i.value=''; i.classList.add('border-red-400'); });
+        inputs[0].focus();
+      }
+    });
+
+    document.getElementById('resendOtpBtn').addEventListener('click', () => {
+      const msg = document.getElementById('resend-msg');
+      msg.classList.remove('hidden');
+      setTimeout(()=>msg.classList.add('hidden'),3000);
+    });
+  });
+
+  // ── Dashboard refresh ─────────────────────────────
+  function refreshDashboard() {
+    const user = JSON.parse(localStorage.getItem('swipechat_user')||'{}');
+    const firstName = user.name ? user.name.split(' ')[0] : 'User';
+    const initials  = user.name ? user.name.split(' ').map(n=>n[0]).join('').toUpperCase().slice(0,2) : 'U';
+    const phone     = user.phone ? '+'+user.phone.slice(0,3)+' '+user.phone.slice(3,6)+' '+user.phone.slice(6,9)+' '+user.phone.slice(9) : '';
+
+    ['dash-avatar','dash-banner-avatar','pay-avatar','drawer-avatar'].forEach(id=>{
+      const el = document.getElementById(id); if(el) el.textContent = initials;
+    });
+    const dg = document.getElementById('dash-greeting'); if(dg) dg.textContent = `Hello, ${firstName}!`;
+    const dw = document.getElementById('dash-welcome');  if(dw) dw.textContent = `Karibu, ${firstName}!`;
+    const dn = document.getElementById('drawer-name');   if(dn) dn.textContent = user.name||'User';
+    const dp = document.getElementById('drawer-phone');  if(dp) dp.textContent = phone;
+  }
+
+  // ── Send payment ──────────────────────────────────
+  let transactions = JSON.parse(localStorage.getItem('swipechat_transactions')||'[]');
+
+  function renderTransactions() {
+    const container = document.getElementById('tx-list');
+    if(!container) return;
+    if(transactions.length===0) {
+      container.innerHTML = `<div class="p-8 text-center text-on-surface-variant"><span class="material-symbols-outlined text-4xl mb-2 block opacity-40">receipt_long</span>No transactions yet.</div>`;
+      return;
+    }
+    container.innerHTML = transactions.slice().reverse().map(tx=>`
+      <div class="flex items-center justify-between px-5 py-4 border-b border-outline-variant last:border-0">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-full bg-surface-container flex items-center justify-center">
+            <span class="material-symbols-outlined text-primary text-sm" style="font-variation-settings:'FILL' 1;">send</span>
+          </div>
+          <div>
+            <p class="font-semibold text-sm">${tx.description||'Payment'}</p>
+            <p class="text-xs text-on-surface-variant">${tx.recipient} · ${tx.date}</p>
+          </div>
+        </div>
+        <div class="text-right">
+          <p class="font-bold text-primary">-KES ${tx.amount}</p>
+          <span class="text-xs bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded-full">Completed</span>
+        </div>
+      </div>`).join('');
+  }
+
+  function handleSendPayment(e) {
+    e.preventDefault();
+    let valid = true;
+    const recipient = document.getElementById('pay-recipient').value.trim();
+    const amount    = parseFloat(document.getElementById('pay-amount').value);
+    const desc      = document.getElementById('pay-desc').value.trim();
+    document.getElementById('pay-recipient-err').classList.add('hidden');
+    document.getElementById('pay-amount-err').classList.add('hidden');
+    if(!recipient) { document.getElementById('pay-recipient-err').classList.remove('hidden'); valid=false; }
+    if(!amount||amount<=0) { document.getElementById('pay-amount-err').classList.remove('hidden'); valid=false; }
+    if(!valid) return;
+
+    const btn = document.getElementById('paySubmitBtn');
+    btn.innerHTML = '<span class="spinner-btn"></span> Processing...';
+    btn.disabled = true;
+
+    setTimeout(()=>{
+      const tx = { id:'PNT_'+Date.now(), recipient, amount:amount.toFixed(2), description:desc||'Payment',
+        date: new Date().toLocaleDateString('en-KE',{day:'numeric',month:'short',year:'numeric'}),
+        };
+      transactions.push(tx);
+      localStorage.setItem('swipechat_transactions', JSON.stringify(transactions));
+      renderTransactions();
+      btn.innerHTML = 'Send via Paynecta';
+      btn.disabled = false;
+      document.getElementById('payForm').reset();
+      const toast = document.getElementById('pay-toast');
+      toast.classList.remove('hidden');
+      setTimeout(()=>toast.classList.add('hidden'),3500);
+    }, 1800);
+  }
+
+  // ── Logout ────────────────────────────────────────
+  function handleLogout() {
+    localStorage.removeItem('swipechat_user');
+    localStorage.removeItem('swipechat_activated');
+    localStorage.removeItem('swipechat_activation_payment');
+    toggleDrawer();
+    showScreen('screen-landing');
+  }
+
+  // ── Hero parallax ─────────────────────────────────
+  window.addEventListener('scroll', () => {
+    const landing = document.getElementById('screen-landing');
+    if(landing && !landing.classList.contains('hidden')) {
+      const heroBg = document.getElementById('hero-bg');
+      if(heroBg) heroBg.style.transform = `translateY(${window.pageYOffset*0.3}px)`;
+    }
+  });
+
+  // Render transactions on load
+  renderTransactions();
+</script>
+</body>
+</html>

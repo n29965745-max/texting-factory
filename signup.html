@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta name="description" content="Create your Texting Factory Kenya account in seconds. Connect with friends and family using M-Pesa powered messaging."/>
+<title>Texting Factory Kenya | Create Account</title>
+<link rel="icon" type="image/svg+xml" href="logo-icon.svg">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<style>
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; vertical-align: middle; }
+  body { min-height: 100dvh; }
+
+  .card { transition: box-shadow 0.25s ease, transform 0.2s ease; }
+  .card:hover { box-shadow: 0 12px 40px rgba(142, 0, 0, 0.08); transform: translateY(-1px); }
+
+  .input-field { transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease; }
+  .input-field:focus { background-color: #fffdfb; box-shadow: 0 0 0 3px rgba(142, 0, 0, 0.08); }
+
+  .btn-primary { transition: background-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease; }
+  .btn-primary:hover:not(:disabled) { box-shadow: 0 6px 24px rgba(142, 0, 0, 0.25); transform: translateY(-1px); }
+  .btn-primary:active:not(:disabled) { transform: scale(0.97); }
+  .btn-primary:disabled { opacity: 0.65; cursor: not-allowed; }
+
+  .link { transition: color 0.15s ease, text-decoration-color 0.15s ease; text-decoration-color: transparent; }
+  .link:hover { text-decoration-color: currentColor; }
+
+  .error-msg { transition: opacity 0.2s ease, max-height 0.2s ease; overflow: hidden; }
+  .spinner { animation: spin 0.7s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+</style>
+<script>
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "background": "#fcf9f8", "surface": "#fcf9f8", "surface-container-lowest": "#ffffff",
+          "surface-container": "#f0edec", "surface-container-high": "#ebe7e7",
+          "surface-container-highest": "#e5e2e1", "on-surface": "#1c1b1b",
+          "on-surface-variant": "#5d3f3b", "primary": "#8e0000", "on-primary": "#ffffff",
+          "primary-container": "#bb0000", "primary-fixed": "#ffdad4",
+          "outline": "#916f69", "outline-variant": "#e6bdb6",
+          "error": "#ba1a1a", "error-container": "#ffdad6", "on-error-container": "#93000a",
+          "secondary": "#106e09", "secondary-container": "#9cf987", "on-secondary-container": "#197411"
+        },
+        fontFamily: { "headline-md": ["Montserrat"], "body-md": ["Inter"], "label-md": ["Inter"], "label-sm": ["Inter"] },
+        fontSize: {
+          "headline-md": ["24px", { lineHeight: "32px", fontWeight: "600" }],
+          "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+          "label-md": ["14px", { lineHeight: "20px", fontWeight: "600" }]
+        }
+      }
+    }
+  }
+</script>
+</head>
+<body class="bg-background text-on-surface font-body-md flex items-center justify-center min-h-screen px-4 py-12">
+
+  <div class="w-full max-w-md">
+    <!-- Logo & Heading -->
+    <div class="text-center mb-10">
+      <h1 class="text-3xl font-extrabold text-primary tracking-tight">Texting Factory</h1>
+      <p class="text-on-surface-variant mt-1.5">Your gateway to seamless conversations</p>
+    </div>
+
+    <!-- Card -->
+    <div class="card bg-surface-container-lowest rounded-2xl shadow-md border border-outline-variant p-8 sm:p-10">
+      <h2 class="text-headline-md font-headline-md text-on-surface mb-2">Get started today</h2>
+      <p class="text-on-surface-variant text-sm mb-7">Fill in your details to create your free account.</p>
+
+      <form id="signupForm" novalidate>
+        <!-- Full Name -->
+        <div class="mb-5">
+          <label class="block font-label-md text-on-surface-variant mb-1.5" for="fullname">Full Name</label>
+          <input id="fullname" type="text" placeholder="e.g. John Kamau"
+            class="input-field w-full px-4 py-3 rounded-xl border border-outline-variant bg-white focus:ring-2 focus:ring-primary focus:border-primary outline-none"/>
+          <p class="text-error text-xs mt-1.5 hidden error-msg" id="fullname-error">
+            <span class="material-symbols-outlined text-sm align-middle mr-0.5">error</span>
+            Please enter your full name.
+          </p>
+        </div>
+
+        <!-- Phone Number -->
+        <div class="mb-5">
+          <label class="block font-label-md text-on-surface-variant mb-1.5" for="phone">M-Pesa Phone Number</label>
+          <div class="flex gap-2.5">
+            <span class="flex items-center px-3.5 py-3 bg-surface-container rounded-xl border border-outline-variant text-on-surface-variant font-semibold text-sm select-none">🇰🇪 +254</span>
+            <input id="phone" type="tel" placeholder="7XX XXX XXX" maxlength="9"
+              class="input-field flex-1 px-4 py-3 rounded-xl border border-outline-variant bg-white focus:ring-2 focus:ring-primary focus:border-primary outline-none"/>
+          </div>
+          <p class="text-error text-xs mt-1.5 hidden error-msg" id="phone-error">
+            <span class="material-symbols-outlined text-sm align-middle mr-0.5">error</span>
+            Please enter a valid Safaricom number (e.g. 712345678).
+          </p>
+          <p class="text-on-surface-variant text-xs mt-1.5 flex items-center gap-1">
+            <span class="material-symbols-outlined text-secondary text-sm">check_circle</span>
+            An M-Pesa STK push will be sent to verify your account.
+          </p>
+        </div>
+
+        <!-- Password -->
+        <div class="mb-5">
+          <label class="block font-label-md text-on-surface-variant mb-1.5" for="password">Password</label>
+          <div class="relative">
+            <input id="password" type="password" placeholder="Min. 8 characters"
+              class="input-field w-full px-4 py-3 rounded-xl border border-outline-variant bg-white focus:ring-2 focus:ring-primary focus:border-primary outline-none pr-12"/>
+            <button type="button" id="togglePwd" class="absolute right-3 top-1/2 -translate-y-1/2 text-outline hover:text-on-surface-variant transition-colors" aria-label="Toggle password visibility">
+              <span class="material-symbols-outlined" id="eyeIcon">visibility</span>
+            </button>
+          </div>
+          <p class="text-error text-xs mt-1.5 hidden error-msg" id="password-error">
+            <span class="material-symbols-outlined text-sm align-middle mr-0.5">error</span>
+            Password must be at least 8 characters.
+          </p>
+        </div>
+
+        <!-- Confirm Password -->
+        <div class="mb-7">
+          <label class="block font-label-md text-on-surface-variant mb-1.5" for="confirm">Confirm Password</label>
+          <input id="confirm" type="password" placeholder="Re-enter your password"
+            class="input-field w-full px-4 py-3 rounded-xl border border-outline-variant bg-white focus:ring-2 focus:ring-primary focus:border-primary outline-none"/>
+          <p class="text-error text-xs mt-1.5 hidden error-msg" id="confirm-error">
+            <span class="material-symbols-outlined text-sm align-middle mr-0.5">error</span>
+            Passwords do not match. Please try again.
+          </p>
+        </div>
+
+        <!-- Submit -->
+        <button type="submit" id="submitBtn"
+          class="btn-primary w-full bg-primary text-on-primary font-label-md py-3.5 rounded-xl shadow-md flex items-center justify-center gap-2">
+          <span id="btnLabel">Create Account</span>
+          <svg id="btnSpinner" class="spinner hidden w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10" stroke-opacity="0.3"/><path d="M12 2a10 10 0 0 1 10 10" stroke-linecap="round"/></svg>
+        </button>
+      </form>
+
+      <p class="text-center text-on-surface-variant text-sm mt-7">
+        Already have an account?
+        <a href="login.html" class="text-primary font-semibold link">Log In</a>
+      </p>
+    </div>
+
+    <p class="text-center text-on-surface-variant text-xs mt-6 opacity-70">Texting Factory Kenya — Safe. Fast. Local.</p>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-surface border-t border-outline-variant mt-auto">
+    <div class="max-w-md mx-auto px-4 py-8">
+      <div class="flex flex-col items-center text-center gap-4">
+        <div class="flex items-center gap-2">
+          <img src="logo-icon.svg" alt="Texting Factory" class="w-8 h-8">
+          <span class="font-bold text-primary">Texting Factory Kenya</span>
+        </div>
+        <div class="flex flex-wrap justify-center gap-4 text-xs text-on-surface-variant">
+          <a href="index.html" class="hover:text-primary transition-colors">Home</a>
+          <a href="login.html" class="hover:text-primary transition-colors">Log In</a>
+          <a href="#" class="hover:text-primary transition-colors">Help Center</a>
+          <a href="#" class="hover:text-primary transition-colors">Terms</a>
+          <a href="#" class="hover:text-primary transition-colors">Privacy</a>
+        </div>
+        <p class="text-on-surface-variant text-xs opacity-60">&copy; 2025 Texting Factory Kenya. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Toggle password visibility
+    document.getElementById('togglePwd').addEventListener('click', () => {
+      const input = document.getElementById('password');
+      const icon  = document.getElementById('eyeIcon');
+      const isText = input.type === 'text';
+      input.type = isText ? 'password' : 'text';
+      icon.textContent = isText ? 'visibility' : 'visibility_off';
+    });
+
+    // Form submission
+    document.getElementById('signupForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      let valid = true;
+
+      const fullname = document.getElementById('fullname').value.trim();
+      const phone    = document.getElementById('phone').value.trim();
+      const password = document.getElementById('password').value;
+      const confirm  = document.getElementById('confirm').value;
+
+      // Reset errors
+      document.querySelectorAll('[id$="-error"]').forEach(el => el.classList.add('hidden'));
+
+      if (!fullname) {
+        document.getElementById('fullname-error').classList.remove('hidden');
+        valid = false;
+      }
+      if (!phone || !/^(7|1)\d{8}$/.test(phone)) {
+        document.getElementById('phone-error').classList.remove('hidden');
+        valid = false;
+      }
+      if (password.length < 8) {
+        document.getElementById('password-error').classList.remove('hidden');
+        valid = false;
+      }
+      if (password !== confirm) {
+        document.getElementById('confirm-error').classList.remove('hidden');
+        valid = false;
+      }
+
+      if (valid) {
+        const btn  = document.getElementById('submitBtn');
+        const lbl  = document.getElementById('btnLabel');
+        const spin = document.getElementById('btnSpinner');
+        btn.disabled = true;
+        lbl.textContent = 'Creating account...';
+        spin.classList.remove('hidden');
+
+        setTimeout(() => {
+          localStorage.setItem('swipechat_user', JSON.stringify({
+            name:  fullname,
+            phone: '254' + phone
+          }));
+          window.location.href = 'activate.html';
+        }, 900);
+      }
+    });
+  </script>
+</body>
+</html>

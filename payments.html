@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta name="description" content="Texting Factory Kenya — Securely send payments, manage your earnings, and track transactions through M-Pesa."/>
+<title>Texting Factory Kenya | Payments</title>
+<link rel="icon" type="image/svg+xml" href="logo-icon.svg">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<style>
+  .material-symbols-outlined { font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24; vertical-align:middle; }
+  body { min-height: max(884px, 100dvh); }
+  .spinner { border: 3px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; width: 20px; height: 20px; animation: spin 0.7s linear infinite; display: inline-block; vertical-align: middle; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .balance-card { background: linear-gradient(135deg, #8e0000 0%, #bb0000 50%, #106e09 100%); }
+  .drawer-overlay { opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
+  .drawer-overlay.active { opacity: 1; pointer-events: auto; }
+  .drawer-panel { transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1); }
+  .nav-item { transition: color 0.2s ease, background 0.2s ease; }
+  .input-field { transition: border-color 0.2s ease, box-shadow 0.2s ease; }
+  .input-field:focus { border-color: #8e0000; box-shadow: 0 0 0 3px rgba(142, 0, 0, 0.1); }
+  .btn-pay { transition: all 0.2s ease; }
+  .btn-pay:hover:not(:disabled) { box-shadow: 0 4px 14px rgba(142, 0, 0, 0.3); }
+  .btn-pay:active:not(:disabled) { transform: scale(0.97); }
+  .btn-pay:disabled { opacity: 0.7; cursor: not-allowed; }
+  .btn-withdraw { transition: all 0.2s ease; }
+  .btn-withdraw:hover { box-shadow: 0 4px 14px rgba(0,0,0,0.15); transform: translateY(-1px); }
+  .btn-withdraw:active { transform: scale(0.97); }
+  .tx-row { transition: background 0.15s ease; }
+  .tx-row:hover { background: #f6f3f2; }
+</style>
+<script>
+  tailwind.config = {
+    darkMode:"class",
+    theme: {
+      extend: {
+        colors: {
+          "background":"#fcf9f8","surface":"#fcf9f8","surface-dim":"#dcd9d9",
+          "surface-container-lowest":"#ffffff","surface-container-low":"#f6f3f2",
+          "surface-container":"#f0edec","surface-container-high":"#ebe7e7",
+          "surface-container-highest":"#e5e2e1","surface-variant":"#e5e2e1",
+          "on-surface":"#1c1b1b","on-surface-variant":"#5d3f3b",
+          "primary":"#8e0000","on-primary":"#ffffff","primary-container":"#bb0000",
+          "primary-fixed":"#ffdad4","on-primary-fixed":"#410000","on-primary-fixed-variant":"#930000",
+          "secondary":"#106e09","on-secondary":"#ffffff","secondary-container":"#9cf987",
+          "on-secondary-container":"#197411",
+          "tertiary":"#745b00","tertiary-fixed":"#ffe08b","on-tertiary-fixed":"#241a00",
+          "outline":"#916f69","outline-variant":"#e6bdb6",
+          "error":"#ba1a1a","error-container":"#ffdad6","on-error-container":"#93000a"
+        },
+        fontFamily: { "headline-md":["Montserrat"],"body-md":["Inter"],"label-md":["Inter"],"label-sm":["Inter"] },
+        spacing: { "container-margin-mobile":"16px","container-margin-desktop":"64px","gutter":"16px" }
+      }
+    }
+  }
+</script>
+</head>
+<body class="bg-background text-on-surface font-sans">
+
+<!-- Top AppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface/95 backdrop-blur-sm shadow-sm h-16">
+  <div class="flex justify-between items-center px-4 md:px-16 h-full w-full max-w-7xl mx-auto">
+    <div class="flex items-center gap-4">
+      <button id="menuBtn" class="material-symbols-outlined text-primary p-2 hover:bg-surface-container-high transition-colors rounded-full">menu</button>
+      <h1 class="text-xl font-extrabold tracking-tight text-primary">Texting Factory Kenya</h1>
+    </div>
+    <div class="flex items-center gap-3">
+      <span class="hidden md:block text-sm font-semibold text-on-surface-variant" id="headerGreeting">Hello!</span>
+      <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white font-bold text-sm" id="avatarInitials">JK</div>
+    </div>
+  </div>
+</header>
+
+<main class="pt-24 pb-28 min-h-screen max-w-7xl mx-auto px-4 md:px-16">
+
+  <!-- Page Header -->
+  <div class="mb-8">
+    <h2 class="text-3xl font-bold text-on-surface">Payments</h2>
+    <p class="text-on-surface-variant mt-1">Send payments and track your earnings — all in one place.</p>
+  </div>
+
+  <!-- Balance Card -->
+  <div class="balance-card text-white rounded-2xl p-6 mb-8 shadow-xl flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+    <div>
+      <div class="flex items-center gap-2 mb-1">
+        <span class="material-symbols-outlined text-lg opacity-80">account_balance_wallet</span>
+        <p class="text-sm opacity-90 uppercase tracking-widest font-semibold">Available Balance</p>
+      </div>
+      <p class="text-4xl font-extrabold mt-1">KES 0.00</p>
+      <p class="text-sm opacity-70 mt-1 flex items-center gap-1">
+        <span class="material-symbols-outlined text-sm">lock</span>
+        Secured via M-Pesa
+      </p>
+    </div>
+    <button id="withdrawBtn"
+      class="btn-withdraw bg-white text-primary font-bold px-6 py-3 rounded-xl shadow-md self-start md:self-auto flex items-center gap-2">
+      <span class="material-symbols-outlined align-middle">account_balance_wallet</span>
+      Withdraw Funds
+    </button>
+  </div>
+
+  <!-- Payment Form & Info -->
+  <div class="grid md:grid-cols-2 gap-6 mb-8">
+
+    <!-- Make a Payment -->
+    <div class="bg-surface-container-lowest rounded-2xl border border-outline-variant shadow-sm p-6">
+      <h3 class="text-lg font-bold mb-5 flex items-center gap-2">
+        <div class="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center">
+          <span class="material-symbols-outlined text-primary" style="font-variation-settings:'FILL' 1;">send_money</span>
+        </div>
+        Send Payment
+      </h3>
+      <form id="paymentForm" novalidate>
+        <div class="mb-4">
+          <label class="block text-sm font-semibold text-on-surface-variant mb-2">Recipient Phone Number</label>
+          <div class="flex gap-2">
+            <span class="flex items-center px-3 py-3 bg-surface-container rounded-xl border border-outline-variant text-on-surface-variant font-semibold text-sm">+254</span>
+            <input id="recipientPhone" type="tel" placeholder="7XX XXX XXX" maxlength="9"
+              class="input-field flex-1 px-4 py-3 rounded-xl border border-outline-variant bg-white outline-none text-sm"/>
+          </div>
+          <p class="text-error text-xs mt-1.5 hidden" id="recipient-error">Please enter a valid Kenyan phone number.</p>
+        </div>
+        <div class="mb-4">
+          <label class="block text-sm font-semibold text-on-surface-variant mb-2">Amount (KES)</label>
+          <input id="amount" type="number" min="1" placeholder="e.g. 500"
+            class="input-field w-full px-4 py-3 rounded-xl border border-outline-variant bg-white outline-none text-sm"/>
+          <p class="text-error text-xs mt-1.5 hidden" id="amount-error">Please enter a valid amount greater than zero.</p>
+        </div>
+        <div class="mb-6">
+          <label class="block text-sm font-semibold text-on-surface-variant mb-2">Description <span class="font-normal opacity-60">(optional)</span></label>
+          <input id="description" type="text" placeholder="e.g. Lesson payment — Week 3"
+            class="input-field w-full px-4 py-3 rounded-xl border border-outline-variant bg-white outline-none text-sm"/>
+        </div>
+        <button type="submit" id="payBtn"
+          class="btn-pay w-full bg-primary text-on-primary font-semibold py-3 rounded-xl shadow-md flex items-center justify-center gap-2">
+          <span class="material-symbols-outlined text-lg">send</span>
+          Send Payment
+        </button>
+      </form>
+    </div>
+
+    <!-- Payment Info -->
+    <div class="bg-surface-container-lowest rounded-2xl border border-outline-variant shadow-sm p-6">
+      <h3 class="text-lg font-bold mb-5 flex items-center gap-2">
+        <div class="w-10 h-10 rounded-full bg-green-50 flex items-center justify-center">
+          <span class="material-symbols-outlined text-secondary" style="font-variation-settings:'FILL' 1;">verified_user</span>
+        </div>
+        How It Works
+      </h3>
+      <div class="space-y-3">
+        <div class="flex items-center justify-between p-4 bg-surface-container rounded-xl">
+          <div>
+            <p class="text-xs text-on-surface-variant uppercase font-semibold tracking-wide">Payment Method</p>
+            <p class="font-bold text-on-surface mt-0.5">M-Pesa</p>
+          </div>
+          <span class="bg-secondary-container text-on-secondary-container text-xs font-bold px-3 py-1 rounded-full">Active</span>
+        </div>
+        <div class="flex items-center gap-3 p-4 bg-surface-container rounded-xl">
+          <span class="material-symbols-outlined text-secondary" style="font-variation-settings:'FILL' 1;">lock</span>
+          <p class="text-sm text-on-surface-variant">All transactions are encrypted and processed securely via M-Pesa's STK Push.</p>
+        </div>
+        <div class="flex items-center gap-3 p-4 bg-surface-container rounded-xl">
+          <span class="material-symbols-outlined text-primary" style="font-variation-settings:'FILL' 1;">speed</span>
+          <div>
+            <p class="text-sm font-semibold text-on-surface">Instant Transfers</p>
+            <p class="text-xs text-on-surface-variant mt-0.5">Payments arrive within seconds</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-3 p-4 bg-surface-container rounded-xl">
+          <span class="material-symbols-outlined text-tertiary" style="font-variation-settings:'FILL' 1;">receipt_long</span>
+          <div>
+            <p class="text-sm font-semibold text-on-surface">Full Transparency</p>
+            <p class="text-xs text-on-surface-variant mt-0.5">Every transaction is logged with a receipt</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Transaction History -->
+  <h3 class="text-lg font-bold text-on-surface mb-4">Transaction History</h3>
+  <div class="bg-surface-container-lowest rounded-2xl border border-outline-variant shadow-sm overflow-hidden" id="txList">
+    <div class="p-8 text-center text-on-surface-variant" id="emptyTx">
+      <span class="material-symbols-outlined text-4xl mb-2 block opacity-40">receipt_long</span>
+      No transactions yet.
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-surface border-t border-outline-variant mt-8 -mx-4 px-4">
+    <div class="max-w-7xl mx-auto py-8">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-2">
+          <img src="logo-icon.svg" alt="Texting Factory" class="w-8 h-8">
+          <span class="font-bold text-primary">Texting Factory Kenya</span>
+        </div>
+        <div class="flex flex-wrap justify-center gap-4 text-xs text-on-surface-variant">
+          <a href="index.html" class="hover:text-primary transition-colors">Home</a>
+          <a href="dashboard.html" class="hover:text-primary transition-colors">Dashboard</a>
+          <a href="#" class="hover:text-primary transition-colors">Help Center</a>
+          <a href="#" class="hover:text-primary transition-colors">Terms</a>
+          <a href="#" class="hover:text-primary transition-colors">Privacy</a>
+        </div>
+        <p class="text-on-surface-variant text-xs opacity-60">&copy; 2025 Texting Factory Kenya</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Success Toast -->
+  <div id="toast" class="fixed bottom-28 left-1/2 -translate-x-1/2 bg-secondary text-on-secondary px-6 py-3 rounded-full shadow-lg font-semibold text-sm hidden transition-all z-50 flex items-center gap-2">
+    <span class="material-symbols-outlined text-lg">check_circle</span>
+    Payment sent successfully!
+  </div>
+</main>
+
+<!-- Bottom Navigation Bar (Mobile) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 bg-surface/95 backdrop-blur-sm border-t border-outline-variant shadow-lg">
+  <div class="flex justify-around items-center px-2 py-2 max-w-lg mx-auto">
+    <a href="index.html" class="nav-item flex flex-col items-center justify-center text-on-surface-variant px-4 py-2 rounded-xl">
+      <span class="material-symbols-outlined text-[22px]">home</span>
+      <span class="text-[10px] font-semibold mt-0.5">Home</span>
+    </a>
+    <a href="payments.html" class="nav-item flex flex-col items-center justify-center text-secondary px-4 py-2 rounded-xl bg-secondary/10">
+      <span class="material-symbols-outlined text-[22px]">payments</span>
+      <span class="text-[10px] font-semibold mt-0.5">Payments</span>
+    </a>
+    <a href="index.html" class="nav-item flex flex-col items-center justify-center text-on-surface-variant px-4 py-2 rounded-xl">
+      <span class="material-symbols-outlined text-[22px]">chat_bubble</span>
+      <span class="text-[10px] font-semibold mt-0.5">Messages</span>
+    </a>
+    <a href="dashboard.html" class="nav-item flex flex-col items-center justify-center text-on-surface-variant px-4 py-2 rounded-xl">
+      <span class="material-symbols-outlined text-[22px]">person</span>
+      <span class="text-[10px] font-semibold mt-0.5">Account</span>
+    </a>
+  </div>
+</nav>
+
+<!-- Drawer Overlay -->
+<div class="drawer-overlay fixed inset-0 bg-black/40 z-[99]" id="drawerOverlay"></div>
+
+<!-- Sidebar Drawer -->
+<aside class="drawer-panel fixed left-0 top-0 h-full w-80 z-[100] bg-surface-container-low shadow-2xl -translate-x-full" id="drawer">
+  <div class="p-6 flex flex-col h-full gap-4">
+    <div class="flex items-center gap-4 mb-6">
+      <div class="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white font-bold text-xl" id="drawerInitials">JK</div>
+      <div>
+        <h4 class="font-bold text-on-surface" id="drawerName">User</h4>
+        <p class="text-sm text-on-surface-variant" id="drawerPhone">+254 7XX XXX XXX</p>
+      </div>
+    </div>
+    <nav class="flex flex-col gap-1">
+      <a href="dashboard.html" class="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-variant rounded-xl transition-colors">
+        <span class="material-symbols-outlined">dashboard</span> Dashboard
+      </a>
+      <a href="index.html" class="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-variant rounded-xl transition-colors">
+        <span class="material-symbols-outlined">people</span> Learner Directory
+      </a>
+      <a href="payments.html" class="flex items-center gap-3 p-3 bg-primary-container text-on-primary font-bold rounded-xl transition-colors">
+        <span class="material-symbols-outlined">payments</span> Payments
+      </a>
+      <a href="#" class="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-variant rounded-xl transition-colors">
+        <span class="material-symbols-outlined">translate</span> Translation Tools
+      </a>
+      <a href="#" class="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-variant rounded-xl transition-colors">
+        <span class="material-symbols-outlined">help_outline</span> Help Center
+      </a>
+    </nav>
+    <div class="mt-auto pt-4 border-t border-outline-variant">
+      <button id="logoutBtn" class="flex items-center gap-3 p-3 text-error hover:bg-error-container rounded-xl transition-colors w-full">
+        <span class="material-symbols-outlined">logout</span> Logout
+      </button>
+    </div>
+  </div>
+</aside>
+
+<script>
+  // --- User info ---
+  const user = JSON.parse(localStorage.getItem('swipechat_user') || '{}');
+  const firstName = user.name ? user.name.split(' ')[0] : 'User';
+  const initials = user.name ? user.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0,2) : 'U';
+  const phoneDisplay = user.phone ? '+' + user.phone.slice(0,3) + ' ' + user.phone.slice(3,6) + ' ' + user.phone.slice(6,9) + ' ' + user.phone.slice(9) : '';
+
+  document.getElementById('headerGreeting').textContent = `Hello, ${firstName}!`;
+  document.getElementById('avatarInitials').textContent = initials;
+  document.getElementById('drawerInitials').textContent = initials;
+  document.getElementById('drawerName').textContent = user.name || 'User';
+  document.getElementById('drawerPhone').textContent = phoneDisplay;
+
+  // --- Transactions ---
+  let transactions = JSON.parse(localStorage.getItem('swipechat_transactions') || '[]');
+
+  function renderTransactions() {
+    const container = document.getElementById('txList');
+    if (transactions.length === 0) {
+      container.innerHTML = `<div class="p-10 text-center text-on-surface-variant flex flex-col items-center gap-3" id="emptyTx">
+        <div class="w-16 h-16 rounded-full bg-surface-container flex items-center justify-center">
+          <span class="material-symbols-outlined text-3xl opacity-40">receipt_long</span>
+        </div>
+        <p class="font-semibold text-sm">No transactions yet</p>
+        <p class="text-xs opacity-60 max-w-xs">Your payment history will appear here once you send your first payment.</p>
+      </div>`;
+      return;
+    }
+    container.innerHTML = transactions.slice().reverse().map(tx => `
+      <div class="tx-row flex items-center justify-between px-6 py-4 border-b border-outline-variant last:border-0">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center">
+            <span class="material-symbols-outlined text-primary" style="font-variation-settings:'FILL' 1;">send</span>
+          </div>
+          <div>
+            <p class="font-semibold text-on-surface text-sm">${tx.description || 'Payment'}</p>
+            <p class="text-xs text-on-surface-variant">${tx.recipient} &middot; ${tx.date}</p>
+          </div>
+        </div>
+        <div class="text-right">
+          <p class="font-bold text-primary">-KES ${tx.amount}</p>
+          <span class="text-xs bg-secondary-container text-on-secondary-container px-2 py-0.5 rounded-full">${tx.status}</span>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  renderTransactions();
+
+  // --- Payment form ---
+  document.getElementById('paymentForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    let valid = true;
+
+    const recipient    = document.getElementById('recipientPhone').value.trim();
+    const amount       = parseFloat(document.getElementById('amount').value);
+    const description  = document.getElementById('description').value.trim();
+
+    document.getElementById('recipient-error').classList.add('hidden');
+    document.getElementById('amount-error').classList.add('hidden');
+
+    if (!recipient || !/^(7|1)\d{8}$/.test(recipient)) {
+      document.getElementById('recipient-error').classList.remove('hidden');
+      valid = false;
+    }
+    if (!amount || amount <= 0) {
+      document.getElementById('amount-error').classList.remove('hidden');
+      valid = false;
+    }
+    if (!valid) return;
+
+    const btn = document.getElementById('payBtn');
+    btn.innerHTML = '<span class="spinner"></span> Processing...';
+    btn.disabled = true;
+
+    await new Promise(resolve => setTimeout(resolve, 1800));
+
+    const tx = {
+      id: 'TX_' + Date.now(),
+      recipient: '+254' + recipient,
+      amount: amount.toFixed(2),
+      description: description || 'Payment',
+      date: new Date().toLocaleDateString('en-KE', { day: 'numeric', month: 'short', year: 'numeric' }),
+      status: 'Completed'
+    };
+    transactions.push(tx);
+    localStorage.setItem('swipechat_transactions', JSON.stringify(transactions));
+    renderTransactions();
+
+    btn.innerHTML = '<span class="material-symbols-outlined text-lg">send</span> Send Payment';
+    btn.disabled = false;
+    document.getElementById('paymentForm').reset();
+
+    const toast = document.getElementById('toast');
+    toast.classList.remove('hidden');
+    setTimeout(() => toast.classList.add('hidden'), 3500);
+  });
+
+  // Withdraw
+  document.getElementById('withdrawBtn').addEventListener('click', () => {
+    alert('Withdrawal request submitted.\nFunds will be sent to your M-Pesa number shortly.');
+  });
+
+  // --- Drawer ---
+  const menuBtn = document.getElementById('menuBtn');
+  const drawer = document.getElementById('drawer');
+  const drawerOverlay = document.getElementById('drawerOverlay');
+  let drawerOpen = false;
+
+  function openDrawer() {
+    drawerOpen = true;
+    drawer.classList.remove('-translate-x-full');
+    drawerOverlay.classList.add('active');
+  }
+
+  function closeDrawer() {
+    drawerOpen = false;
+    drawer.classList.add('-translate-x-full');
+    drawerOverlay.classList.remove('active');
+  }
+
+  menuBtn.addEventListener('click', () => {
+    drawerOpen ? closeDrawer() : openDrawer();
+  });
+
+  drawerOverlay.addEventListener('click', closeDrawer);
+
+  document.addEventListener('click', (e) => {
+    if (drawerOpen && !drawer.contains(e.target) && !menuBtn.contains(e.target)) {
+      closeDrawer();
+    }
+  });
+
+  document.getElementById('logoutBtn').addEventListener('click', () => {
+    localStorage.removeItem('swipechat_user');
+    localStorage.removeItem('swipechat_activated');
+    window.location.href = 'signup.html';
+  });
+</script>
+</body>
+</html>
