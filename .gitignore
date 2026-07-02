@@ -6,3 +6,4 @@ test-site.js
 test.js
 *.log
 .DS_Store
+.vercel
