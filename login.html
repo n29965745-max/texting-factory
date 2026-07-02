@@ -48,17 +48,18 @@
   }
 </script>
 </head>
-<body class="bg-background text-on-surface font-sans flex items-center justify-center min-h-screen px-4 py-12">
+<body class="bg-background text-on-surface font-sans min-h-screen flex flex-col">
 
-  <div class="w-full max-w-md">
-    <!-- Logo & Heading -->
-    <div class="text-center mb-10">
-      <h1 class="text-3xl font-extrabold text-primary tracking-tight">Texting Factory</h1>
-      <p class="text-on-surface-variant mt-1.5">Welcome back — let's pick up where you left off</p>
-    </div>
+  <div class="flex-1 flex items-center justify-center px-4 py-8">
+    <div class="w-full max-w-md">
+      <!-- Logo & Heading -->
+      <div class="text-center mb-8">
+        <h1 class="text-3xl font-extrabold text-primary tracking-tight">Texting Factory</h1>
+        <p class="text-on-surface-variant mt-1.5">Welcome back — let's pick up where you left off</p>
+      </div>
 
-    <!-- Card -->
-    <div class="card bg-surface-container-lowest rounded-2xl shadow-md border border-outline-variant p-8 sm:p-10">
+      <!-- Card -->
+      <div class="card bg-surface-container-lowest rounded-2xl shadow-md border border-outline-variant p-6 sm:p-8">
       <h2 class="text-2xl font-bold text-on-surface mb-2">Log in to your account</h2>
       <p class="text-on-surface-variant text-sm mb-7">Enter your phone number and password to continue.</p>
 
@@ -66,10 +67,10 @@
         <!-- Phone Number -->
         <div class="mb-5">
           <label class="block text-sm font-semibold text-on-surface-variant mb-1.5" for="phone">M-Pesa Phone Number</label>
-          <div class="flex gap-2.5">
-            <span class="flex items-center px-3.5 py-3 bg-surface-container rounded-xl border border-outline-variant text-on-surface-variant font-semibold text-sm select-none">🇰🇪 +254</span>
+          <div class="flex items-stretch border border-outline-variant rounded-xl bg-white focus-within:ring-2 focus-within:ring-primary focus-within:border-primary overflow-hidden transition-all">
+            <span class="flex items-center px-3.5 bg-surface-container text-on-surface-variant font-semibold text-sm select-none border-r border-outline-variant">🇰🇪 +254</span>
             <input id="phone" type="tel" placeholder="7XX XXX XXX" maxlength="9"
-              class="input-field flex-1 px-4 py-3 rounded-xl border border-outline-variant bg-white focus:ring-2 focus:ring-primary focus:border-primary outline-none"/>
+              class="input-field flex-1 px-4 py-3 bg-transparent outline-none"/>
           </div>
           <p class="text-error text-xs mt-1.5 hidden error-msg" id="phone-error">
             <span class="material-symbols-outlined text-sm align-middle mr-0.5">error</span>
@@ -113,6 +114,7 @@
     </div>
 
     <p class="text-center text-on-surface-variant text-xs mt-6 opacity-70">Texting Factory Kenya — Safe. Fast. Local.</p>
+    </div>
   </div>
 
   <!-- Footer -->
