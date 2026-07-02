@@ -86,10 +86,10 @@
         <!-- Phone Number -->
         <div class="mb-5">
           <label class="block font-label-md text-on-surface-variant mb-1.5" for="phone">M-Pesa Phone Number</label>
-          <div class="flex gap-2.5">
-            <span class="flex items-center px-3.5 py-3 bg-surface-container rounded-xl border border-outline-variant text-on-surface-variant font-semibold text-sm select-none">🇰🇪 +254</span>
+          <div class="flex items-stretch border border-outline-variant rounded-xl bg-white focus-within:ring-2 focus-within:ring-primary focus-within:border-primary overflow-hidden transition-all">
+            <span class="flex items-center px-3.5 bg-surface-container text-on-surface-variant font-semibold text-sm select-none border-r border-outline-variant">🇰🇪 +254</span>
             <input id="phone" type="tel" placeholder="7XX XXX XXX" maxlength="9"
-              class="input-field flex-1 px-4 py-3 rounded-xl border border-outline-variant bg-white focus:ring-2 focus:ring-primary focus:border-primary outline-none"/>
+              class="input-field flex-1 px-4 py-3 bg-transparent outline-none"/>
           </div>
           <p class="text-error text-xs mt-1.5 hidden error-msg" id="phone-error">
             <span class="material-symbols-outlined text-sm align-middle mr-0.5">error</span>
@@ -98,6 +98,26 @@
           <p class="text-on-surface-variant text-xs mt-1.5 flex items-center gap-1">
             <span class="material-symbols-outlined text-secondary text-sm">check_circle</span>
             An M-Pesa STK push will be sent to verify your account.
+          </p>
+        </div>
+
+        <!-- Email -->
+        <div class="mb-5">
+          <label class="block font-label-md text-on-surface-variant mb-1.5" for="email">Email Address</label>
+          <div class="flex items-center border border-outline-variant rounded-xl bg-white focus-within:ring-2 focus-within:ring-primary focus-within:border-primary overflow-hidden transition-all">
+            <span class="flex items-center px-3.5 bg-surface-container border-r border-outline-variant">
+              <span class="material-symbols-outlined text-on-surface-variant text-xl">mail</span>
+            </span>
+            <input id="email" type="email" placeholder="you@example.com"
+              class="input-field flex-1 px-4 py-3 bg-transparent outline-none"/>
+          </div>
+          <p class="text-error text-xs mt-1.5 hidden error-msg" id="email-error">
+            <span class="material-symbols-outlined text-sm align-middle mr-0.5">error</span>
+            Please enter a valid email address.
+          </p>
+          <p class="text-on-surface-variant text-xs mt-1.5 flex items-center gap-1">
+            <span class="material-symbols-outlined text-secondary text-sm">check_circle</span>
+            We'll send your account verification and payment receipts here.
           </p>
         </div>
 
@@ -182,6 +202,7 @@
 
       const fullname = document.getElementById('fullname').value.trim();
       const phone    = document.getElementById('phone').value.trim();
+      const email    = document.getElementById('email').value.trim();
       const password = document.getElementById('password').value;
       const confirm  = document.getElementById('confirm').value;
 
@@ -194,6 +215,10 @@
       }
       if (!phone || !/^(7|1)\d{8}$/.test(phone)) {
         document.getElementById('phone-error').classList.remove('hidden');
+        valid = false;
+      }
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        document.getElementById('email-error').classList.remove('hidden');
         valid = false;
       }
       if (password.length < 8) {
@@ -216,7 +241,8 @@
         setTimeout(() => {
           localStorage.setItem('swipechat_user', JSON.stringify({
             name:  fullname,
-            phone: '254' + phone
+            phone: '254' + phone,
+            email: email
           }));
           window.location.href = 'activate.html';
         }, 900);

@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Texting Factory | Admin Panel</title>
+<meta name="description" content="Texting Factory Admin Dashboard — manage tutor accounts, view registrations, and monitor platform activity.">
+<link rel="icon" type="image/svg+xml" href="logo-icon.svg">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<style>
+  .material-symbols-outlined { font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24; vertical-align:middle; }
+  body { min-height: 100dvh; }
+  .card { transition: box-shadow 0.2s ease, transform 0.15s ease; }
+  .card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+  .stat-card { transition: transform 0.15s ease, box-shadow 0.15s ease; }
+  .stat-card:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.1); }
+  .row-hover { transition: background 0.15s ease; }
+  .row-hover:hover { background: rgba(142,0,0,0.03); }
+  .badge { display:inline-flex; align-items:center; gap:4px; padding:2px 10px; border-radius:9999px; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.5px; }
+  .badge-active { background:#9cf987; color:#197411; }
+  .badge-pending { background:#ffe08b; color:#4f3d00; }
+  .badge-inactive { background:#e5e2e1; color:#5d3f3b; }
+  @keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+  .fade-in { animation: fadeIn 0.3s ease; }
+</style>
+<script>
+  tailwind.config = {
+    darkMode:"class",
+    theme: {
+      extend: {
+        colors: {
+          "background":"#fcf9f8","surface":"#fcf9f8",
+          "surface-container-lowest":"#ffffff","surface-container-low":"#f6f3f2",
+          "surface-container":"#f0edec","surface-container-high":"#ebe7e7",
+          "on-surface":"#1c1b1b","on-surface-variant":"#5d3f3b",
+          "primary":"#8e0000","on-primary":"#ffffff","primary-container":"#bb0000",
+          "primary-fixed":"#ffdad4",
+          "secondary":"#106e09","on-secondary":"#ffffff","secondary-container":"#9cf987",
+          "on-secondary-container":"#197411",
+          "tertiary":"#745b00","tertiary-container":"#d0a600",
+          "outline":"#916f69","outline-variant":"#e6bdb6",
+          "error":"#ba1a1a","error-container":"#ffdad6","on-error-container":"#93000a"
+        }
+      }
+    }
+  }
+</script>
+</head>
+<body class="bg-background text-on-surface font-sans">
+
+<!-- Top AppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface shadow-sm h-16">
+  <div class="flex justify-between items-center px-4 md:px-16 h-full w-full max-w-7xl mx-auto">
+    <div class="flex items-center gap-4">
+      <a href="dashboard.html" class="material-symbols-outlined text-primary p-2 hover:bg-surface-container-high transition-colors rounded-full">arrow_back</a>
+      <div class="flex items-center gap-2">
+        <img src="logo-icon.svg" alt="Texting Factory" class="w-7 h-7">
+        <h1 class="text-xl font-extrabold tracking-tight text-primary">Admin Panel</h1>
+      </div>
+    </div>
+    <div class="flex items-center gap-3">
+      <span class="hidden md:block text-sm font-semibold text-on-surface-variant">Administrator</span>
+      <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white font-bold text-sm">AD</div>
+    </div>
+  </div>
+</header>
+
+<main class="pt-24 pb-12 min-h-screen max-w-7xl mx-auto px-4 md:px-16 fade-in">
+
+  <!-- Page Header -->
+  <div class="mb-8">
+    <h2 class="text-3xl font-bold text-on-surface">Tutor Accounts</h2>
+    <p class="text-on-surface-variant mt-1">View and manage all registered tutor accounts on the platform.</p>
+  </div>
+
+  <!-- Stats Row -->
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+    <div class="stat-card bg-surface-container-lowest rounded-xl p-5 border border-outline-variant shadow-sm text-center">
+      <span class="material-symbols-outlined text-primary text-3xl" style="font-variation-settings:'FILL' 1;">people</span>
+      <p class="text-2xl font-bold text-primary mt-1" id="stat-total">0</p>
+      <p class="text-xs text-on-surface-variant font-semibold uppercase tracking-wider">Total Tutors</p>
+    </div>
+    <div class="stat-card bg-surface-container-lowest rounded-xl p-5 border border-outline-variant shadow-sm text-center">
+      <span class="material-symbols-outlined text-secondary text-3xl" style="font-variation-settings:'FILL' 1;">check_circle</span>
+      <p class="text-2xl font-bold text-secondary mt-1" id="stat-active">0</p>
+      <p class="text-xs text-on-surface-variant font-semibold uppercase tracking-wider">Activated</p>
+    </div>
+    <div class="stat-card bg-surface-container-lowest rounded-xl p-5 border border-outline-variant shadow-sm text-center">
+      <span class="material-symbols-outlined text-tertiary text-3xl" style="font-variation-settings:'FILL' 1;">pending</span>
+      <p class="text-2xl font-bold text-tertiary mt-1" id="stat-pending">0</p>
+      <p class="text-xs text-on-surface-variant font-semibold uppercase tracking-wider">Pending</p>
+    </div>
+    <div class="stat-card bg-surface-container-lowest rounded-xl p-5 border border-outline-variant shadow-sm text-center">
+      <span class="material-symbols-outlined text-primary text-3xl" style="font-variation-settings:'FILL' 1;">payments</span>
+      <p class="text-2xl font-bold text-primary mt-1" id="stat-revenue">KES 0</p>
+      <p class="text-xs text-on-surface-variant font-semibold uppercase tracking-wider">Revenue</p>
+    </div>
+  </div>
+
+  <!-- Search & Filter Bar -->
+  <div class="flex flex-col sm:flex-row gap-3 mb-6">
+    <div class="flex-1 relative">
+      <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+      <input id="searchInput" type="text" placeholder="Search by name, phone, or email..."
+        class="w-full pl-10 pr-4 py-3 rounded-xl border border-outline-variant bg-white focus:ring-2 focus:ring-primary focus:border-primary outline-none transition-all text-sm"/>
+    </div>
+    <select id="filterStatus" class="px-4 py-3 rounded-xl border border-outline-variant bg-white focus:ring-2 focus:ring-primary focus:border-primary outline-none text-sm font-semibold text-on-surface-variant">
+      <option value="all">All Status</option>
+      <option value="active">Activated</option>
+      <option value="pending">Pending</option>
+    </select>
+  </div>
+
+  <!-- Tutor Table -->
+  <div class="bg-surface-container-lowest rounded-2xl border border-outline-variant shadow-sm overflow-hidden">
+    <!-- Table Header -->
+    <div class="hidden md:grid grid-cols-12 gap-4 px-6 py-3 bg-surface-container border-b border-outline-variant text-xs font-bold text-on-surface-variant uppercase tracking-wider">
+      <div class="col-span-3">Tutor</div>
+      <div class="col-span-2">Phone</div>
+      <div class="col-span-3">Email</div>
+      <div class="col-span-2">Status</div>
+      <div class="col-span-2 text-right">Actions</div>
+    </div>
+    <!-- Rows -->
+    <div id="tutorList">
+      <div class="p-12 text-center text-on-surface-variant">
+        <span class="material-symbols-outlined text-5xl mb-3 block opacity-30">people</span>
+        <p class="font-semibold">No tutor accounts found</p>
+        <p class="text-sm mt-1">Accounts will appear here once users sign up.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Back to Dashboard -->
+  <div class="mt-8 text-center">
+    <a href="dashboard.html" class="inline-flex items-center gap-2 text-primary font-semibold hover:underline transition-colors">
+      <span class="material-symbols-outlined text-lg">arrow_back</span>
+      Back to Dashboard
+    </a>
+  </div>
+
+</main>
+
+<script>
+  // ════════════════════════════════════════════════════════════════════════
+  // Admin credentials (simple client-side check)
+  // ════════════════════════════════════════════════════════════════════════
+  const ADMIN_PIN = '0000'; // Change this to your preferred admin PIN
+  const isAuthenticated = sessionStorage.getItem('tf_admin_auth') === 'true';
+
+  if (!isAuthenticated) {
+    const pin = prompt('Enter Admin PIN to access the panel:');
+    if (pin === ADMIN_PIN) {
+      sessionStorage.setItem('tf_admin_auth', 'true');
+    } else {
+      alert('Incorrect PIN. Redirecting to dashboard.');
+      window.location.href = 'dashboard.html';
+    }
+  }
+
+  // ════════════════════════════════════════════════════════════════════════
+  // Collect all tutor accounts from localStorage
+  // ════════════════════════════════════════════════════════════════════════
+  function getTutors() {
+    const tutors = [];
+
+    // Primary user
+    const user = JSON.parse(localStorage.getItem('swipechat_user') || '{}');
+    if (user.name || user.phone) {
+      tutors.push({
+        name: user.name || 'Unknown',
+        phone: user.phone || '',
+        email: user.email || 'Not provided',
+        activated: localStorage.getItem('swipechat_activated') === 'true',
+        registrationDate: user.registrationDate || new Date().toISOString(),
+      });
+    }
+
+    // Additional registered users (stored as array)
+    const extraUsers = JSON.parse(localStorage.getItem('tf_all_users') || '[]');
+    extraUsers.forEach(u => {
+      if (!tutors.find(t => t.phone === u.phone)) {
+        tutors.push(u);
+      }
+    });
+
+    return tutors;
+  }
+
+  // ════════════════════════════════════════════════════════════════════════
+  // Render tutor list
+  // ════════════════════════════════════════════════════════════════════════
+  function renderTutors(tutors) {
+    const container = document.getElementById('tutorList');
+
+    // Update stats
+    const total = tutors.length;
+    const active = tutors.filter(t => t.activated).length;
+    const pending = total - active;
+    const revenue = active * 100; // KES 100 per activation
+
+    document.getElementById('stat-total').textContent = total;
+    document.getElementById('stat-active').textContent = active;
+    document.getElementById('stat-pending').textContent = pending;
+    document.getElementById('stat-revenue').textContent = `KES ${revenue.toLocaleString()}`;
+
+    if (tutors.length === 0) {
+      container.innerHTML = `
+        <div class="p-12 text-center text-on-surface-variant">
+          <span class="material-symbols-outlined text-5xl mb-3 block opacity-30">people</span>
+          <p class="font-semibold">No tutor accounts found</p>
+          <p class="text-sm mt-1">Accounts will appear here once users sign up.</p>
+        </div>`;
+      return;
+    }
+
+    container.innerHTML = tutors.map((t, i) => {
+      const initials = t.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+      const phoneDisplay = t.phone ? '+' + t.phone.slice(0,3) + ' ' + t.phone.slice(3,6) + ' ' + t.phone.slice(6) : '—';
+      const statusBadge = t.activated
+        ? '<span class="badge badge-active">Active</span>'
+        : '<span class="badge badge-pending">Pending</span>';
+      const date = t.registrationDate ? new Date(t.registrationDate).toLocaleDateString('en-KE', { day:'numeric', month:'short', year:'numeric' }) : '—';
+
+      return `
+        <div class="row-hover grid grid-cols-1 md:grid-cols-12 gap-3 md:gap-4 px-6 py-4 border-b border-outline-variant last:border-0 items-center">
+          <div class="col-span-3 flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full ${t.activated ? 'bg-secondary-container text-on-secondary-container' : 'bg-surface-container-high text-on-surface-variant'} flex items-center justify-center font-bold text-sm flex-shrink-0">${initials}</div>
+            <div>
+              <p class="font-semibold text-sm text-on-surface">${t.name}</p>
+              <p class="text-xs text-on-surface-variant md:hidden">${phoneDisplay}</p>
+            </div>
+          </div>
+          <div class="col-span-2 hidden md:block text-sm text-on-surface-variant font-mono">${phoneDisplay}</div>
+          <div class="col-span-3 hidden md:block text-sm text-on-surface-variant">${t.email}</div>
+          <div class="col-span-2">${statusBadge}</div>
+          <div class="col-span-2 flex items-center justify-end gap-2">
+            <button onclick="viewTutor(${i})" class="p-2 rounded-lg hover:bg-surface-container transition-colors text-on-surface-variant" title="View Details">
+              <span class="material-symbols-outlined text-lg">visibility</span>
+            </button>
+            <button onclick="toggleStatus(${i})" class="p-2 rounded-lg hover:bg-surface-container transition-colors text-on-surface-variant" title="Toggle Status">
+              <span class="material-symbols-outlined text-lg">toggle_on</span>
+            </button>
+          </div>
+        </div>`;
+    }).join('');
+  }
+
+  // ════════════════════════════════════════════════════════════════════════
+  // Actions
+  // ════════════════════════════════════════════════════════════════════════
+  function viewTutor(index) {
+    const tutors = getTutors();
+    const t = tutors[index];
+    if (!t) return;
+    const phoneDisplay = t.phone ? '+' + t.phone.slice(0,3) + ' ' + t.phone.slice(3,6) + ' ' + t.phone.slice(6) : '—';
+    alert(
+      `Tutor Details\n\n` +
+      `Name: ${t.name}\n` +
+      `Phone: ${phoneDisplay}\n` +
+      `Email: ${t.email}\n` +
+      `Status: ${t.activated ? 'Active' : 'Pending'}\n` +
+      `Registered: ${t.registrationDate ? new Date(t.registrationDate).toLocaleDateString() : 'Unknown'}`
+    );
+  }
+
+  function toggleStatus(index) {
+    const tutors = getTutors();
+    const t = tutors[index];
+    if (!t) return;
+
+    t.activated = !t.activated;
+
+    // Update primary user if matching
+    const user = JSON.parse(localStorage.getItem('swipechat_user') || '{}');
+    if (user.phone === t.phone) {
+      localStorage.setItem('swipechat_activated', t.activated ? 'true' : 'false');
+    }
+
+    // Update extra users array
+    const extraUsers = JSON.parse(localStorage.getItem('tf_all_users') || '[]');
+    const extraIdx = extraUsers.findIndex(u => u.phone === t.phone);
+    if (extraIdx >= 0) {
+      extraUsers[extraIdx].activated = t.activated;
+      localStorage.setItem('tf_all_users', JSON.stringify(extraUsers));
+    }
+
+    applyFilters();
+  }
+
+  // ════════════════════════════════════════════════════════════════════════
+  // Search & Filter
+  // ════════════════════════════════════════════════════════════════════════
+  function applyFilters() {
+    let tutors = getTutors();
+    const query = document.getElementById('searchInput').value.toLowerCase();
+    const status = document.getElementById('filterStatus').value;
+
+    if (query) {
+      tutors = tutors.filter(t =>
+        t.name.toLowerCase().includes(query) ||
+        t.phone.includes(query) ||
+        t.email.toLowerCase().includes(query)
+      );
+    }
+
+    if (status === 'active') tutors = tutors.filter(t => t.activated);
+    if (status === 'pending') tutors = tutors.filter(t => !t.activated);
+
+    renderTutors(tutors);
+  }
+
+  document.getElementById('searchInput').addEventListener('input', applyFilters);
+  document.getElementById('filterStatus').addEventListener('change', applyFilters);
+
+  // Initial render
+  applyFilters();
+</script>
+</body>
+</html>

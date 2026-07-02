@@ -247,11 +247,21 @@
         <!-- Phone -->
         <div>
           <label class="block font-label-md text-on-surface-variant mb-1">M-Pesa Phone Number</label>
-          <div class="flex items-center border border-outline rounded-lg px-3 py-2 bg-white focus-within:border-primary transition-colors">
-            <span class="text-sm font-bold text-on-surface-variant mr-2">🇰🇪 +254</span>
-            <input id="su-phone" class="w-full border-none focus:ring-0 p-0 text-body-md outline-none" placeholder="7XX XXX XXX" maxlength="9" required type="tel">
-            <span class="ml-2 px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container text-[10px] font-bold uppercase">Secure</span>
+          <div class="flex items-stretch border border-outline rounded-lg bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition-colors overflow-hidden">
+            <span class="flex items-center px-3 bg-surface-container text-on-surface-variant font-bold text-sm border-r border-outline select-none">🇰🇪 +254</span>
+            <input id="su-phone" class="flex-1 border-none focus:ring-0 p-0 text-body-md outline-none px-3 py-2 bg-transparent" placeholder="7XX XXX XXX" maxlength="9" required type="tel">
           </div>
+          <p class="text-error text-xs mt-1 hidden" id="su-phone-err">Enter a valid Safaricom number (e.g. 712345678).</p>
+        </div>
+        <!-- Email -->
+        <div>
+          <label class="block font-label-md text-on-surface-variant mb-1">Email Address</label>
+          <div class="flex items-center border border-outline rounded-lg px-3 py-2 bg-white focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition-colors">
+            <span class="material-symbols-outlined text-outline mr-2">mail</span>
+            <input id="su-email" class="w-full border-none focus:ring-0 p-0 text-body-md outline-none" placeholder="you@example.com" required type="email">
+          </div>
+          <p class="text-error text-xs mt-1 hidden" id="su-email-err">Please enter a valid email address.</p>
+        </div>
           <p class="text-error text-xs mt-1 hidden" id="su-phone-err">Enter a valid Safaricom number (e.g. 712345678).</p>
         </div>
         <!-- Password -->
@@ -734,13 +744,15 @@
     let valid = true;
     const name  = document.getElementById('su-name').value.trim();
     const phone = document.getElementById('su-phone').value.trim();
+    const email = document.getElementById('su-email').value.trim();
     const pwd   = document.getElementById('su-password').value;
     document.querySelectorAll('[id$="-err"]').forEach(el=>el.classList.add('hidden'));
     if(!name) { document.getElementById('su-name-err').classList.remove('hidden'); valid=false; }
     if(!phone || !/^(7|1)\d{8}$/.test(phone)) { document.getElementById('su-phone-err').classList.remove('hidden'); valid=false; }
+    if(!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { document.getElementById('su-email-err').classList.remove('hidden'); valid=false; }
     if(pwd.length < 8) { document.getElementById('su-pwd-err').classList.remove('hidden'); valid=false; }
     if(!valid) return;
-    localStorage.setItem('swipechat_user', JSON.stringify({ name, phone:'254'+phone }));
+    localStorage.setItem('swipechat_user', JSON.stringify({ name, phone:'254'+phone, email }));
     const formatted = '+254 '+phone.slice(0,3)+' '+phone.slice(3,6)+' '+phone.slice(6);
     document.getElementById('act-phone-display').textContent = formatted;
     showScreen('screen-activation');
