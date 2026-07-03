@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta name="description" content="Texting Factory Kenya — Your profile and account settings."/>
+<title>Texting Factory Kenya | Profile</title>
+<link rel="icon" type="image/svg+xml" href="logo-icon.svg">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<style>
+  .material-symbols-outlined { font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24; vertical-align:middle; }
+  body { min-height: max(884px, 100dvh); }
+  .profile-row { transition: background 0.2s ease; }
+  .profile-row:hover { background: #f6f3f2; }
+  .profile-row:active { background: #ebe7e7; }
+  .nav-item { transition: color 0.2s ease, background 0.2s ease; }
+  .nav-item.active { color: #106e09; }
+</style>
+<script>
+  tailwind.config = {
+    darkMode:"class",
+    theme: {
+      extend: {
+        colors: {
+          "background":"#fcf9f8","surface":"#fcf9f8","surface-dim":"#dcd9d9",
+          "surface-container-lowest":"#ffffff","surface-container-low":"#f6f3f2",
+          "surface-container":"#f0edec","surface-container-high":"#ebe7e7",
+          "surface-container-highest":"#e5e2e1","surface-variant":"#e5e2e1",
+          "on-surface":"#1c1b1b","on-surface-variant":"#5d3f3b",
+          "primary":"#8e0000","on-primary":"#ffffff","primary-container":"#bb0000",
+          "primary-fixed":"#ffdad4","on-primary-fixed":"#410000","on-primary-fixed-variant":"#930000",
+          "secondary":"#106e09","on-secondary":"#ffffff","secondary-container":"#9cf987",
+          "on-secondary-container":"#197411",
+          "tertiary":"#745b00","tertiary-fixed":"#ffe08b","on-tertiary-fixed":"#241a00",
+          "outline":"#916f69","outline-variant":"#e6bdb6",
+          "error":"#ba1a1a","error-container":"#ffdad6","on-error-container":"#93000a"
+        },
+        fontFamily: { "headline-md":["Montserrat"],"body-md":["Inter"],"label-md":["Inter"],"label-sm":["Inter"] },
+        spacing: { "container-margin-mobile":"16px","container-margin-desktop":"64px","gutter":"16px" }
+      }
+    }
+  }
+</script>
+</head>
+<body class="bg-background text-on-surface font-sans">
+
+<!-- Top AppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface/95 backdrop-blur-sm shadow-sm h-16">
+  <div class="flex items-center px-4 md:px-16 h-full w-full max-w-7xl mx-auto gap-4">
+    <a href="dashboard.html" class="material-symbols-outlined text-primary p-2 hover:bg-surface-container-high transition-colors rounded-full">arrow_back</a>
+    <h1 class="text-xl font-extrabold tracking-tight text-primary">Profile</h1>
+  </div>
+</header>
+
+<main class="pt-24 pb-32 min-h-screen max-w-7xl mx-auto px-4 md:px-16">
+
+  <!-- Profile Card -->
+  <div class="bg-surface-container-lowest rounded-2xl border border-outline-variant shadow-sm p-6 mb-8">
+    <div class="flex flex-col items-center text-center">
+      <div class="w-24 h-24 rounded-full bg-primary flex items-center justify-center text-white text-4xl font-bold mb-4" id="avatarInitials">U</div>
+      <h2 class="text-2xl font-bold text-on-surface" id="userName">User</h2>
+      <p class="text-sm text-on-surface-variant mt-1" id="userPhone">—</p>
+      <p class="text-sm text-on-surface-variant" id="userEmail">—</p>
+    </div>
+  </div>
+
+  <!-- Account Stats -->
+  <h3 class="text-lg font-bold text-on-surface mb-4">Account Details</h3>
+  <div class="bg-surface-container-lowest rounded-2xl border border-outline-variant shadow-sm divide-y divide-outline-variant mb-8">
+    <div class="flex items-center justify-between px-5 py-4">
+      <div class="flex items-center gap-3">
+        <span class="material-symbols-outlined text-secondary" style="font-variation-settings:'FILL' 1;">calendar_today</span>
+        <span class="text-sm font-semibold text-on-surface-variant">Member Since</span>
+      </div>
+      <span class="text-sm font-semibold text-on-surface" id="memberSince">—</span>
+    </div>
+    <div class="flex items-center justify-between px-5 py-4">
+      <div class="flex items-center gap-3">
+        <span class="material-symbols-outlined text-tertiary" style="font-variation-settings:'FILL' 1;">verified</span>
+        <span class="text-sm font-semibold text-on-surface-variant">Account Status</span>
+      </div>
+      <span class="text-sm font-bold px-3 py-1 rounded-full" id="accountStatus">—</span>
+    </div>
+    <div class="flex items-center justify-between px-5 py-4">
+      <div class="flex items-center gap-3">
+        <span class="material-symbols-outlined text-primary" style="font-variation-settings:'FILL' 1;">receipt_long</span>
+        <span class="text-sm font-semibold text-on-surface-variant">Activation Ref</span>
+      </div>
+      <span class="text-sm font-semibold text-on-surface text-right max-w-[180px] truncate" id="activationRef" title="—">—</span>
+    </div>
+  </div>
+
+  <!-- Profile Settings -->
+  <h3 class="text-lg font-bold text-on-surface mb-4">Settings</h3>
+  <div class="bg-surface-container-lowest rounded-2xl border border-outline-variant shadow-sm divide-y divide-outline-variant mb-8">
+    <a href="#" class="profile-row flex items-center justify-between px-5 py-4 rounded-t-2xl">
+      <div class="flex items-center gap-3">
+        <span class="material-symbols-outlined text-on-surface-variant">person</span>
+        <span class="text-sm font-semibold text-on-surface">Edit Profile</span>
+      </div>
+      <span class="material-symbols-outlined text-on-surface-variant">chevron_right</span>
+    </a>
+    <a href="#" class="profile-row flex items-center justify-between px-5 py-4">
+      <div class="flex items-center gap-3">
+        <span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+        <span class="text-sm font-semibold text-on-surface">Notification Settings</span>
+      </div>
+      <span class="material-symbols-outlined text-on-surface-variant">chevron_right</span>
+    </a>
+    <a href="#" class="profile-row flex items-center justify-between px-5 py-4">
+      <div class="flex items-center gap-3">
+        <span class="material-symbols-outlined text-on-surface-variant">translate</span>
+        <span class="text-sm font-semibold text-on-surface">Language</span>
+      </div>
+      <span class="material-symbols-outlined text-on-surface-variant">chevron_right</span>
+    </a>
+    <a href="#" class="profile-row flex items-center justify-between px-5 py-4">
+      <div class="flex items-center gap-3">
+        <span class="material-symbols-outlined text-on-surface-variant">help_outline</span>
+        <span class="text-sm font-semibold text-on-surface">Help Center</span>
+      </div>
+      <span class="material-symbols-outlined text-on-surface-variant">chevron_right</span>
+    </a>
+    <a href="#" class="profile-row flex items-center justify-between px-5 py-4">
+      <div class="flex items-center gap-3">
+        <span class="material-symbols-outlined text-on-surface-variant">info</span>
+        <span class="text-sm font-semibold text-on-surface">About Texting Factory</span>
+      </div>
+      <span class="material-symbols-outlined text-on-surface-variant">chevron_right</span>
+    </a>
+    <a href="#" class="profile-row flex items-center justify-between px-5 py-4">
+      <div class="flex items-center gap-3">
+        <span class="material-symbols-outlined text-on-surface-variant">description</span>
+        <span class="text-sm font-semibold text-on-surface">Terms of Service</span>
+      </div>
+      <span class="material-symbols-outlined text-on-surface-variant">chevron_right</span>
+    </a>
+    <a href="#" class="profile-row flex items-center justify-between px-5 py-4 rounded-b-2xl">
+      <div class="flex items-center gap-3">
+        <span class="material-symbols-outlined text-on-surface-variant">lock</span>
+        <span class="text-sm font-semibold text-on-surface">Privacy Policy</span>
+      </div>
+      <span class="material-symbols-outlined text-on-surface-variant">chevron_right</span>
+    </a>
+  </div>
+
+  <!-- Logout Button -->
+  <button id="logoutBtn" class="w-full flex items-center justify-center gap-3 bg-error text-white font-bold py-4 rounded-2xl shadow-sm hover:bg-red-700 active:bg-red-800 transition-colors mb-8">
+    <span class="material-symbols-outlined">logout</span>
+    Logout
+  </button>
+
+  <!-- Footer -->
+  <footer class="bg-surface border-t border-outline-variant mt-8 -mx-4 px-4">
+    <div class="max-w-7xl mx-auto py-8">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-2">
+          <img src="logo-icon.svg" alt="Texting Factory" class="w-8 h-8">
+          <span class="font-bold text-primary">Texting Factory Kenya</span>
+        </div>
+        <div class="flex flex-wrap justify-center gap-4 text-xs text-on-surface-variant">
+          <a href="index.html" class="hover:text-primary transition-colors">Home</a>
+          <a href="payments.html" class="hover:text-primary transition-colors">Payments</a>
+          <a href="#" class="hover:text-primary transition-colors">Help Center</a>
+          <a href="#" class="hover:text-primary transition-colors">Terms</a>
+          <a href="#" class="hover:text-primary transition-colors">Privacy</a>
+        </div>
+        <p class="text-on-surface-variant text-xs opacity-60">&copy; 2025 Texting Factory Kenya</p>
+      </div>
+    </div>
+  </footer>
+
+</main>
+
+<!-- Bottom Navigation Bar (Mobile) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 bg-surface/95 backdrop-blur-sm border-t border-outline-variant shadow-lg">
+  <div class="flex justify-around items-center px-2 py-2 max-w-lg mx-auto">
+    <a href="index.html" class="nav-item flex flex-col items-center justify-center text-on-surface-variant px-4 py-2 rounded-xl">
+      <span class="material-symbols-outlined text-[22px]">home</span>
+      <span class="text-[10px] font-semibold mt-0.5">Home</span>
+    </a>
+    <a href="payments.html" class="nav-item flex flex-col items-center justify-center text-on-surface-variant px-4 py-2 rounded-xl">
+      <span class="material-symbols-outlined text-[22px]">payments</span>
+      <span class="text-[10px] font-semibold mt-0.5">Payments</span>
+    </a>
+    <a href="chats.html" class="nav-item flex flex-col items-center justify-center text-on-surface-variant px-4 py-2 rounded-xl">
+      <span class="material-symbols-outlined text-[22px]">chat_bubble</span>
+      <span class="text-[10px] font-semibold mt-0.5">Messages</span>
+    </a>
+    <a href="profile.html" class="nav-item active flex flex-col items-center justify-center text-secondary px-4 py-2 rounded-xl bg-secondary/10">
+      <span class="material-symbols-outlined text-[22px]">person</span>
+      <span class="text-[10px] font-semibold mt-0.5">Profile</span>
+    </a>
+  </div>
+</nav>
+
+<script>
+  // Load user from localStorage
+  const user = JSON.parse(localStorage.getItem('swipechat_user') || '{}');
+  const initials = user.name
+    ? user.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)
+    : 'U';
+
+  // Populate profile card
+  document.getElementById('avatarInitials').textContent = initials;
+  document.getElementById('userName').textContent = user.name || 'User';
+  document.getElementById('userPhone').textContent = user.phone || '—';
+  document.getElementById('userEmail').textContent = user.email || '—';
+
+  // Populate account stats
+  const created = user.created_at || user.createdAt || null;
+  if (created) {
+    const d = new Date(created);
+    document.getElementById('memberSince').textContent = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  }
+
+  const activated = localStorage.getItem('swipechat_activated');
+  const statusEl = document.getElementById('accountStatus');
+  if (activated === 'true' || activated === true) {
+    statusEl.textContent = 'Active';
+    statusEl.classList.add('text-secondary', 'bg-green-50');
+  } else {
+    statusEl.textContent = 'Pending';
+    statusEl.classList.add('text-tertiary', 'bg-amber-50');
+  }
+
+  const activationRef = user.swipechat_activation_payment || '';
+  const refEl = document.getElementById('activationRef');
+  refEl.textContent = activationRef || '—';
+  refEl.title = activationRef || '—';
+
+  // Logout
+  document.getElementById('logoutBtn').addEventListener('click', () => {
+    localStorage.removeItem('swipechat_user');
+    localStorage.removeItem('swipechat_activated');
+    localStorage.removeItem('swipechat_activation_payment');
+    window.location.href = 'signup.html';
+  });
+</script>
+</body>
+</html>

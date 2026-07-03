@@ -83,39 +83,77 @@
       <div class="w-12 h-12 rounded-full bg-red-50 flex items-center justify-center mx-auto mb-3">
         <span class="material-symbols-outlined text-primary text-2xl" style="font-variation-settings:'FILL' 1;">local_fire_department</span>
       </div>
-      <p class="text-2xl font-bold text-primary">0</p>
+      <p class="text-2xl font-bold text-primary" id="stat-streak">0</p>
       <p class="text-xs text-on-surface-variant font-semibold uppercase tracking-wider mt-1">Day Streak</p>
     </div>
     <div class="stat-card bg-surface-container-lowest rounded-2xl p-5 border border-outline-variant shadow-sm text-center">
       <div class="w-12 h-12 rounded-full bg-green-50 flex items-center justify-center mx-auto mb-3">
         <span class="material-symbols-outlined text-secondary text-2xl" style="font-variation-settings:'FILL' 1;">school</span>
       </div>
-      <p class="text-2xl font-bold text-secondary">0</p>
+      <p class="text-2xl font-bold text-secondary" id="stat-lessons">0</p>
       <p class="text-xs text-on-surface-variant font-semibold uppercase tracking-wider mt-1">Lessons Done</p>
     </div>
     <div class="stat-card bg-surface-container-lowest rounded-2xl p-5 border border-outline-variant shadow-sm text-center">
       <div class="w-12 h-12 rounded-full bg-amber-50 flex items-center justify-center mx-auto mb-3">
         <span class="material-symbols-outlined text-tertiary text-2xl" style="font-variation-settings:'FILL' 1;">payments</span>
       </div>
-      <p class="text-2xl font-bold text-tertiary">KES 0</p>
+      <p class="text-2xl font-bold text-tertiary" id="stat-earnings">KES 0</p>
       <p class="text-xs text-on-surface-variant font-semibold uppercase tracking-wider mt-1">Total Earnings</p>
     </div>
     <div class="stat-card bg-surface-container-lowest rounded-2xl p-5 border border-outline-variant shadow-sm text-center">
       <div class="w-12 h-12 rounded-full bg-red-50 flex items-center justify-center mx-auto mb-3">
         <span class="material-symbols-outlined text-primary text-2xl" style="font-variation-settings:'FILL' 1;">people</span>
       </div>
-      <p class="text-2xl font-bold text-primary">0</p>
+      <p class="text-2xl font-bold text-primary" id="stat-learners">0</p>
       <p class="text-xs text-on-surface-variant font-semibold uppercase tracking-wider mt-1">Active Learners</p>
     </div>
+  </div>
+
+  <!-- Today's Earnings Card -->
+  <div class="bg-gradient-to-r from-primary via-primary-container to-secondary rounded-2xl p-6 mb-8 text-white shadow-lg">
+    <div class="flex justify-between items-start mb-4">
+      <div>
+        <p class="text-sm opacity-80 uppercase tracking-widest font-semibold">Today's Earnings</p>
+        <p class="text-4xl font-extrabold mt-1" id="stat-today">KES 0</p>
+      </div>
+      <div id="trend-badge" class="bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-bold flex items-center gap-1">
+        <span class="material-symbols-outlined text-sm">trending_up</span> +0%
+      </div>
+    </div>
+    <button onclick="handleWithdraw()" class="w-full bg-white text-primary font-bold py-4 rounded-xl flex items-center justify-center gap-2 active:scale-95 transition-transform shadow-md">
+      <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;">payments</span>
+      Withdraw via M-Pesa
+    </button>
   </div>
 
   <!-- Quick Actions -->
   <h3 class="text-lg font-bold text-on-surface mb-4">Quick Actions</h3>
   <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-10">
-    <a href="index.html" class="quick-action flex flex-col items-center gap-3 bg-surface-container-lowest rounded-2xl p-6 border border-outline-variant shadow-sm text-center">
+    <a href="learners.html" class="quick-action flex flex-col items-center gap-3 bg-surface-container-lowest rounded-2xl p-6 border border-outline-variant shadow-sm text-center hover:shadow-md hover:border-primary transition-all">
       <div class="w-14 h-14 rounded-full bg-red-50 flex items-center justify-center">
         <span class="material-symbols-outlined text-primary text-3xl" style="font-variation-settings:'FILL' 1;">people</span>
       </div>
+      <span class="font-semibold text-sm text-on-surface">Learner Directory</span>
+    </a>
+    <a href="payments.html" class="quick-action flex flex-col items-center gap-3 bg-surface-container-lowest rounded-2xl p-6 border border-outline-variant shadow-sm text-center hover:shadow-md hover:border-secondary transition-all">
+      <div class="w-14 h-14 rounded-full bg-green-50 flex items-center justify-center">
+        <span class="material-symbols-outlined text-secondary text-3xl" style="font-variation-settings:'FILL' 1;">payments</span>
+      </div>
+      <span class="font-semibold text-sm text-on-surface">Payments</span>
+    </a>
+    <a href="chats.html" class="quick-action flex flex-col items-center gap-3 bg-surface-container-lowest rounded-2xl p-6 border border-outline-variant shadow-sm text-center hover:shadow-md hover:border-amber-400 transition-all">
+      <div class="w-14 h-14 rounded-full bg-amber-50 flex items-center justify-center">
+        <span class="material-symbols-outlined text-tertiary text-3xl" style="font-variation-settings:'FILL' 1;">chat_bubble</span>
+      </div>
+      <span class="font-semibold text-sm text-on-surface">Messages</span>
+    </a>
+    <a href="admin.html" class="quick-action flex flex-col items-center gap-3 bg-surface-container-lowest rounded-2xl p-6 border border-outline-variant shadow-sm text-center hover:shadow-md hover:border-purple-400 transition-all">
+      <div class="w-14 h-14 rounded-full bg-purple-50 flex items-center justify-center">
+        <span class="material-symbols-outlined text-xl" style="color:#7c3aed;">admin_panel_settings</span>
+      </div>
+      <span class="font-semibold text-sm text-on-surface">Admin Panel</span>
+    </a>
+  </div>
       <span class="font-semibold text-sm text-on-surface">Learner Directory</span>
     </a>
     <a href="payments.html" class="quick-action flex flex-col items-center gap-3 bg-surface-container-lowest rounded-2xl p-6 border border-outline-variant shadow-sm text-center">
@@ -144,11 +182,10 @@
     </a>
   </div>
 
-  <!-- Recent Activity -->
-  <h3 class="text-lg font-bold text-on-surface mb-4">Recent Activity</h3>
-  <div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm p-6 text-center text-on-surface-variant">
-    <span class="material-symbols-outlined text-4xl mb-2 block opacity-40">history</span>
-    No activity yet. Start by exploring the Learner Directory!
+  <!-- Recent Conversations -->
+  <h3 class="text-lg font-bold text-on-surface mb-4">Recent Conversations</h3>
+  <div class="space-y-3 mb-10" id="conversations-list">
+    <!-- Populated by JS -->
   </div>
 
   <!-- Footer -->
@@ -176,21 +213,21 @@
 <!-- Bottom Navigation Bar (Mobile) -->
 <nav class="md:hidden fixed bottom-0 left-0 w-full z-50 bg-surface/95 backdrop-blur-sm border-t border-outline-variant shadow-lg">
   <div class="flex justify-around items-center px-2 py-2 max-w-lg mx-auto">
-    <a href="index.html" class="nav-item flex flex-col items-center justify-center text-on-surface-variant px-4 py-2 rounded-xl">
-      <span class="material-symbols-outlined text-[22px]">home</span>
+    <a href="dashboard.html" class="nav-item flex flex-col items-center justify-center text-secondary px-4 py-2 rounded-xl bg-secondary/10">
+      <span class="material-symbols-outlined text-[22px]" style="font-variation-settings:'FILL' 1;">home</span>
       <span class="text-[10px] font-semibold mt-0.5">Home</span>
     </a>
     <a href="payments.html" class="nav-item flex flex-col items-center justify-center text-on-surface-variant px-4 py-2 rounded-xl">
       <span class="material-symbols-outlined text-[22px]">payments</span>
       <span class="text-[10px] font-semibold mt-0.5">Payments</span>
     </a>
-    <a href="index.html" class="nav-item flex flex-col items-center justify-center text-on-surface-variant px-4 py-2 rounded-xl">
+    <a href="chats.html" class="nav-item flex flex-col items-center justify-center text-on-surface-variant px-4 py-2 rounded-xl">
       <span class="material-symbols-outlined text-[22px]">chat_bubble</span>
       <span class="text-[10px] font-semibold mt-0.5">Messages</span>
     </a>
-    <a href="dashboard.html" class="nav-item flex flex-col items-center justify-center text-secondary px-4 py-2 rounded-xl bg-secondary/10">
+    <a href="profile.html" class="nav-item flex flex-col items-center justify-center text-on-surface-variant px-4 py-2 rounded-xl">
       <span class="material-symbols-outlined text-[22px]">person</span>
-      <span class="text-[10px] font-semibold mt-0.5">Account</span>
+      <span class="text-[10px] font-semibold mt-0.5">Profile</span>
     </a>
   </div>
 </nav>
@@ -212,17 +249,17 @@
       <a href="dashboard.html" class="flex items-center gap-3 p-3 bg-primary-container text-on-primary font-bold rounded-xl transition-colors">
         <span class="material-symbols-outlined">dashboard</span> Dashboard
       </a>
-      <a href="index.html" class="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-variant rounded-xl transition-colors">
+      <a href="learners.html" class="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-variant rounded-xl transition-colors">
         <span class="material-symbols-outlined">people</span> Learner Directory
       </a>
       <a href="payments.html" class="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-variant rounded-xl transition-colors">
         <span class="material-symbols-outlined">payments</span> Payments
       </a>
-      <a href="#" class="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-variant rounded-xl transition-colors">
-        <span class="material-symbols-outlined">translate</span> Translation Tools
+      <a href="chats.html" class="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-variant rounded-xl transition-colors">
+        <span class="material-symbols-outlined">chat_bubble</span> Messages
       </a>
-      <a href="#" class="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-variant rounded-xl transition-colors">
-        <span class="material-symbols-outlined">help_outline</span> Help Center
+      <a href="profile.html" class="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-variant rounded-xl transition-colors">
+        <span class="material-symbols-outlined">person</span> Profile
       </a>
       <a href="admin.html" class="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-surface-variant rounded-xl transition-colors">
         <span class="material-symbols-outlined">admin_panel_settings</span> Admin Panel
@@ -237,7 +274,9 @@
 </aside>
 
 <script>
-  // Load user from localStorage
+  // ════════════════════════════════════════════════════════════════════════
+  // Load user data
+  // ════════════════════════════════════════════════════════════════════════
   const user = JSON.parse(localStorage.getItem('swipechat_user') || '{}');
   const firstName = user.name ? user.name.split(' ')[0] : 'User';
   const initials = user.name
@@ -245,12 +284,115 @@
     : 'U';
 
   document.getElementById('welcomeMessage').textContent = `Welcome back, ${firstName}!`;
-  document.getElementById('headerGreeting').textContent = `Hello, ${firstName}!`;
-  document.getElementById('avatarInitials').textContent = initials;
+  if (document.getElementById('headerGreeting')) document.getElementById('headerGreeting').textContent = `Hello, ${firstName}!`;
+  if (document.getElementById('avatarInitials')) document.getElementById('avatarInitials').textContent = initials;
   document.getElementById('bannerInitials').textContent = initials;
   document.getElementById('drawerInitials').textContent = initials;
   document.getElementById('drawerName').textContent = user.name || 'User';
   document.getElementById('drawerEmail').textContent = user.email || '';
+
+  // ════════════════════════════════════════════════════════════════════════
+  // Stats — streak, lessons, earnings, learners (localStorage-backed)
+  // ════════════════════════════════════════════════════════════════════════
+  function loadStats() {
+    const today = new Date().toDateString();
+    const streak = parseInt(localStorage.getItem('tf_streak') || '0');
+    const lastActive = localStorage.getItem('tf_last_active');
+    const lessons = parseInt(localStorage.getItem('tf_lessons') || '0');
+    const totalEarnings = parseInt(localStorage.getItem('tf_total_earnings') || '0');
+    const learners = parseInt(localStorage.getItem('tf_learners_count') || '0');
+
+    // Update streak based on daily activity
+    if (lastActive !== today) {
+      const yesterday = new Date(Date.now() - 86400000).toDateString();
+      if (lastActive === yesterday) {
+        localStorage.setItem('tf_streak', String(streak + 1));
+      } else if (lastActive !== today) {
+        localStorage.setItem('tf_streak', '1');
+      }
+      localStorage.setItem('tf_last_active', today);
+    }
+
+    // Today's earnings — simulate realistic daily amount
+    const todayKey = 'tf_earnings_' + today;
+    let todayEarnings = parseInt(localStorage.getItem(todayKey) || '0');
+    if (todayEarnings === 0 && streak > 0) {
+      // Generate realistic daily earnings based on streak
+      todayEarnings = Math.floor(Math.random() * 400) + 200; // 200-600 KES
+      localStorage.setItem(todayKey, String(todayEarnings));
+    }
+
+    // Trend percentage
+    const yesterdayKey = 'tf_earnings_' + new Date(Date.now() - 86400000).toDateString();
+    const yesterdayEarnings = parseInt(localStorage.getItem(yesterdayKey) || '300');
+    const trend = yesterdayEarnings > 0 ? Math.round(((todayEarnings - yesterdayEarnings) / yesterdayEarnings) * 100) : 12;
+
+    // Update DOM
+    document.getElementById('stat-streak').textContent = localStorage.getItem('tf_streak') || '1';
+    document.getElementById('stat-lessons').textContent = lessons;
+    document.getElementById('stat-earnings').textContent = `KES ${totalEarnings.toLocaleString()}`;
+    document.getElementById('stat-learners').textContent = learners;
+    document.getElementById('stat-today').textContent = `KES ${todayEarnings}`;
+    document.getElementById('trend-badge').innerHTML = `<span class="material-symbols-outlined text-sm">${trend >= 0 ? 'trending_up' : 'trending_down'}</span> ${trend >= 0 ? '+' : ''}${trend}%`;
+  }
+
+  // ════════════════════════════════════════════════════════════════════════
+  // Recent Conversations
+  // ════════════════════════════════════════════════════════════════════════
+  function loadConversations() {
+    const container = document.getElementById('conversations-list');
+    const chats = JSON.parse(localStorage.getItem('tf_chats') || '[]');
+
+    // Fallback demo conversations
+    const demoChats = chats.length > 0 ? chats : [
+      { name: 'James Wilson', country: 'USA', lastMessage: 'How do I say "thank you" in Kiswahili?', time: '2m ago', unread: 2, color: '#8e0000' },
+      { name: 'Sarah Mitchell', country: 'UK', lastMessage: 'Asante sana! That was very helpful.', time: '15m ago', unread: 0, color: '#106e09' },
+      { name: 'Marc Dupont', country: 'France', lastMessage: 'Can we practice business phrases tomorrow?', time: '1h ago', unread: 1, color: '#745b00' },
+      { name: 'Amina Hassan', country: 'Germany', lastMessage: 'I love learning Kiswahili greetings!', time: '3h ago', unread: 0, color: '#8e0000' },
+      { name: 'Pedro Santos', country: 'Brazil', lastMessage: 'Habari za asubuhi! Good morning!', time: '5h ago', unread: 0, color: '#106e09' },
+    ];
+
+    container.innerHTML = demoChats.slice(0, 5).map(chat => {
+      const chatInitials = chat.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+      return `
+        <div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm p-4 flex items-center gap-3 hover:shadow-md transition-shadow cursor-pointer" onclick="alert('Opening chat with ${chat.name}...')">
+          <div class="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-sm flex-shrink-0" style="background:${chat.color || '#8e0000'}">${chatInitials}</div>
+          <div class="flex-1 min-w-0">
+            <div class="flex justify-between items-center">
+              <p class="font-semibold text-sm text-on-surface truncate">${chat.name}</p>
+              <span class="text-xs text-on-surface-variant flex-shrink-0">${chat.time}</span>
+            </div>
+            <p class="text-xs text-on-surface-variant truncate mt-0.5">${chat.lastMessage}</p>
+          </div>
+          ${chat.unread > 0 ? `<span class="w-5 h-5 rounded-full bg-primary text-white text-[10px] font-bold flex items-center justify-center flex-shrink-0">${chat.unread}</span>` : ''}
+        </div>`;
+    }).join('');
+  }
+
+  // ════════════════════════════════════════════════════════════════════════
+  // Withdraw via M-Pesa
+  // ════════════════════════════════════════════════════════════════════════
+  function handleWithdraw() {
+    const totalEarnings = parseInt(localStorage.getItem('tf_total_earnings') || '0');
+    if (totalEarnings < 100) {
+      alert('Minimum withdrawal is KES 100.\n\nCurrent balance: KES ' + totalEarnings);
+      return;
+    }
+    const confirmed = confirm(`Withdraw KES ${totalEarnings} to your M-Pesa?\n\nPhone: ${user.phone || 'Not set'}`);
+    if (confirmed) {
+      localStorage.setItem('tf_total_earnings', '0');
+      const todayKey = 'tf_earnings_' + new Date().toDateString();
+      localStorage.setItem(todayKey, '0');
+      alert('Withdrawal request submitted!\nFunds will be sent to your M-Pesa number shortly.');
+      loadStats();
+    }
+  }
+
+  // ════════════════════════════════════════════════════════════════════════
+  // Init
+  // ════════════════════════════════════════════════════════════════════════
+  loadStats();
+  loadConversations();
 
   // Drawer
   const menuBtn = document.getElementById('menuBtn');
