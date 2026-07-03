@@ -286,10 +286,18 @@
 <script>
   const user = JSON.parse(localStorage.getItem('swipechat_user') || '{}');
   const phone = user.phone || '';
+  const rawPhone = phone;
   const formatted = phone ? '+' + phone.slice(0,3) + ' ' + phone.slice(3,6) + ' ' + phone.slice(6) : '+254 7XX XXX XXX';
 
   document.getElementById('phoneDisplay').textContent = formatted;
   document.getElementById('phonePending').textContent = formatted;
+
+  // ── State ──
+  let pollInterval = null;
+  let pollCount = 0;
+  let countdownInterval = null;
+  let countdownSecs = 120;
+  const MAX_POLLS = 40;
 
   // ── Helpers ──
   function showStep(id) {
@@ -306,7 +314,6 @@
       document.getElementById('dot1').classList.replace('text-on-primary','text-on-secondary');
       document.getElementById('dot1').textContent = '✓';
       document.getElementById('stepLabel').textContent = 'Payment Confirmed!';
-      localStorage.setItem('swipechat_activated', 'true');
     } else if (id === 'step-failed') {
       document.getElementById('progressBar').style.width = '100%';
       document.getElementById('dot2').classList.replace('bg-surface-container','bg-error');
@@ -328,10 +335,94 @@
     document.getElementById('errorBox').classList.add('hidden');
   }
 
-  // ── STK Push ──
-  let countdownInterval;
-  let currentRef = null;
+  // ── Countdown ──
+  function startCountdown() {
+    countdownSecs = 120;
+    clearInterval(countdownInterval);
+    countdownInterval = setInterval(() => {
+      countdownSecs--;
+      const m = Math.floor(countdownSecs / 60);
+      const s = countdownSecs % 60;
+      document.getElementById('countdownDisplay').textContent = `${m}:${String(s).padStart(2,'0')}`;
+      if (countdownSecs <= 0) {
+        stopPolling();
+        document.getElementById('failureReason').textContent = 'The payment prompt timed out. Please try again.';
+        showStep('step-failed');
+      }
+    }, 1000);
+  }
 
+  function stopPolling() {
+    if (pollInterval) { clearInterval(pollInterval); pollInterval = null; }
+    if (countdownInterval) { clearInterval(countdownInterval); countdownInterval = null; }
+  }
+
+  // ── Poll Paynecta status ──
+  async function startPolling(reference) {
+    pollCount = 0;
+    startCountdown();
+
+    pollInterval = setInterval(async () => {
+      pollCount++;
+      try {
+        const res = await fetch('/api/stk-status/' + encodeURIComponent(reference));
+        const data = await res.json();
+
+        const resultCode = data.ResultCode !== undefined
+          ? String(data.ResultCode)
+          : (data.status || data.result_code || '');
+        const status = (data.status || data.payment_status || '').toLowerCase();
+
+        console.log('[Poll]', pollCount, { resultCode, status, confirmed: data.confirmed });
+
+        // Success — only when Paynecta confirms actual payment
+        if (data.confirmed || resultCode === '0' || status === 'success' || status === 'completed' || status === 'paid') {
+          stopPolling();
+          onPaymentSuccess(data.reference || data.MpesaReceiptNumber || reference);
+          return;
+        }
+
+        // User cancelled
+        if (resultCode === '1032' || status === 'cancelled' || data.cancelled) {
+          stopPolling();
+          document.getElementById('failureReason').textContent = 'You cancelled the M-Pesa prompt. Please try again when ready.';
+          showStep('step-failed');
+          return;
+        }
+
+        // Hard failure
+        if (data.failed || ['failed','declined','rejected'].includes(status) ||
+            (resultCode && resultCode !== '0' && resultCode !== '' && resultCode !== 'pending')) {
+          stopPolling();
+          document.getElementById('failureReason').textContent =
+            data.ResultDesc || data.message || 'The payment was not completed. Please try again.';
+          showStep('step-failed');
+          return;
+        }
+
+        // Still pending — keep polling
+      } catch (e) {
+        console.warn('[Poll] Network error, will retry:', e.message);
+      }
+
+      if (pollCount >= MAX_POLLS) {
+        stopPolling();
+        document.getElementById('failureReason').textContent = 'Could not verify payment. Please contact support.';
+        showStep('step-failed');
+      }
+    }, 5000);
+  }
+
+  function onPaymentSuccess(ref) {
+    document.getElementById('txRefDisplay').textContent = ref;
+    localStorage.setItem('swipechat_activated', 'true');
+    localStorage.setItem('swipechat_activation_payment', JSON.stringify({
+      ref, amount: 100, status: 'confirmed', timestamp: new Date().toISOString()
+    }));
+    showStep('step-confirmed');
+  }
+
+  // ── Send STK Push ──
   async function sendStkPush() {
     hideError();
     const btn = document.getElementById('payBtn');
@@ -345,105 +436,81 @@
       const res = await fetch('/api/stk-push', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ phone, amount: 100 })
+        body: JSON.stringify({ phone: rawPhone, amount: 100 })
       });
       const data = await res.json();
-      if (!data.success) {
-        showError('Payment failed', data.error || 'Could not send STK prompt. Please try again.');
-        btn.disabled = false;
-        document.getElementById('payBtnIcon').outerHTML = '<span class="material-symbols-outlined" style="font-variation-settings:\'FILL\' 1;" id="payBtnIcon">phone_iphone</span>';
-        text.textContent = 'Pay KES 100 via M-Pesa';
-        return;
+      console.log('[STK Push Response]', data);
+
+      if (!res.ok || data.success === false) {
+        throw new Error(data.error || data.errorMessage || data.message || 'Payment request failed');
       }
 
-      currentRef = data.reference;
+      const reference = data.reference || data.CheckoutRequestID || data.checkout_request_id || data.id || 'REF_' + Date.now();
+      localStorage.setItem('swipechat_stk_ref', reference);
+
       showStep('step-waiting');
-      startCountdown();
-      pollStatus(data.reference);
+      startPolling(reference);
+
     } catch (err) {
-      showError('Network error', 'Could not reach the payment server. Check your connection and try again.');
-      btn.disabled = false;
-      document.getElementById('payBtnIcon').outerHTML = '<span class="material-symbols-outlined" style="font-variation-settings:\'FILL\' 1;" id="payBtnIcon">phone_iphone</span>';
-      text.textContent = 'Pay KES 100 via M-Pesa';
+      console.error('[STK Push Error]', err);
+      const btnEl = document.getElementById('payBtn');
+      btnEl.disabled = false;
+      btnEl.innerHTML = `
+        <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;" id="payBtnIcon">phone_iphone</span>
+        <span id="payBtnText">Send M-Pesa Prompt (KES 100)</span>`;
+      showError('Could not send payment request', err.message || 'Please check your internet connection and try again.');
     }
-  }
-
-  // ── Countdown ──
-  let countdownSec = 120;
-  function startCountdown() {
-    countdownSec = 120;
-    clearInterval(countdownInterval);
-    countdownInterval = setInterval(() => {
-      countdownSec--;
-      const m = Math.floor(countdownSec / 60);
-      const s = countdownSec % 60;
-      document.getElementById('countdownDisplay').textContent = m + ':' + String(s).padStart(2, '0');
-      if (countdownSec <= 0) {
-        clearInterval(countdownInterval);
-        showStep('step-failed');
-        document.getElementById('failureReason').textContent = 'The payment prompt expired. Please try again.';
-      }
-    }, 1000);
-  }
-
-  // ── Poll status ──
-  async function pollStatus(ref) {
-    const maxAttempts = 40;
-    for (let i = 0; i < maxAttempts; i++) {
-      await new Promise(r => setTimeout(r, 3000));
-      try {
-        const res = await fetch('/api/stk-status/' + encodeURIComponent(ref));
-        const data = await res.json();
-        if (data.confirmed) {
-          clearInterval(countdownInterval);
-          document.getElementById('txRefDisplay').textContent = ref;
-          showStep('step-confirmed');
-          return;
-        }
-        if (data.failed || data.cancelled) {
-          clearInterval(countdownInterval);
-          showStep('step-failed');
-          document.getElementById('failureReason').textContent =
-            data.cancelled ? 'You cancelled the payment prompt.' : 'The payment was not completed. Please try again.';
-          return;
-        }
-      } catch (e) { /* retry */ }
-    }
-    clearInterval(countdownInterval);
-    showStep('step-failed');
-    document.getElementById('failureReason').textContent = 'Could not verify payment status. Please contact support.';
   }
 
   // ── Event listeners ──
   document.getElementById('payBtn').addEventListener('click', sendStkPush);
 
-  document.getElementById('resendBtn').addEventListener('click', () => {
-    if (currentRef) {
-      showStep('step-pay');
-      const btn = document.getElementById('payBtn');
-      btn.disabled = false;
-      document.getElementById('payBtnIcon').outerHTML = '<span class="material-symbols-outlined" style="font-variation-settings:\'FILL\' 1;" id="payBtnIcon">phone_iphone</span>';
-      document.getElementById('payBtnText').textContent = 'Pay KES 100 via M-Pesa';
+  document.getElementById('resendBtn').addEventListener('click', async () => {
+    stopPolling();
+    const btn = document.getElementById('resendBtn');
+    btn.disabled = true;
+    btn.textContent = 'Sending...';
+
+    try {
+      const res = await fetch('/api/stk-push', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ phone: rawPhone, amount: 100 })
+      });
+      const data = await res.json();
+      if (!res.ok || data.success === false) throw new Error(data.error || 'Resend failed');
+
+      const reference = data.reference || data.CheckoutRequestID || data.id || 'REF_' + Date.now();
+      localStorage.setItem('swipechat_stk_ref', reference);
+
+      const log = document.getElementById('statusLog');
+      const row = document.createElement('div');
+      row.className = 'flex items-center gap-2 text-sm text-secondary';
+      row.innerHTML = '<span class="material-symbols-outlined text-base" style="font-variation-settings:\'FILL\' 1;">check_circle</span><span>Prompt resent</span>';
+      log.appendChild(row);
+
+      pollCount = 0;
+      startCountdown();
+      startPolling(reference);
+    } catch (e) {
+      showError('Resend failed', e.message || 'Could not resend. Please try again.');
     }
+
+    btn.disabled = false;
+    btn.textContent = "Didn't receive the prompt? Resend";
   });
 
   document.getElementById('retryBtn').addEventListener('click', () => {
     showStep('step-pay');
     const btn = document.getElementById('payBtn');
     btn.disabled = false;
-    document.getElementById('payBtnIcon').outerHTML = '<span class="material-symbols-outlined" style="font-variation-settings:\'FILL\' 1;" id="payBtnIcon">phone_iphone</span>';
-    document.getElementById('payBtnText').textContent = 'Pay KES 100 via M-Pesa';
+    btn.innerHTML = `
+      <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;" id="payBtnIcon">phone_iphone</span>
+      <span id="payBtnText">Send M-Pesa Prompt (KES 100)</span>`;
   });
 
-  // ── Redirect if already activated ──
-  if (localStorage.getItem('swipechat_activated') === 'true') {
-    window.location.href = 'dashboard.html';
-  }
-
-  // ── Redirect if no user ──
-  if (!user.phone) {
-    window.location.href = 'signup.html';
-  }
+  // ── Redirect guards ──
+  if (!user.phone) window.location.href = 'signup.html';
 </script>
 </body>
 </html>
