@@ -110,14 +110,7 @@
       <!-- STEP 1: Confirm phone & initiate payment                 -->
       <!-- ════════════════════════════════════════════════════════ -->
       <div class="step active" id="step-pay">
-        <!-- Demo Mode Banner -->
-        <div id="demoBanner" class="bg-amber-50 border border-amber-300 rounded-xl p-3 mb-5 flex items-center gap-3">
-          <span class="material-symbols-outlined text-amber-600 text-xl">science</span>
-          <div>
-            <p class="text-sm font-bold text-amber-800">Demo Mode Active</p>
-            <p class="text-xs text-amber-700">Payment is simulated. Click "Send M-Pesa Prompt" to test the flow.</p>
-          </div>
-        </div>
+
 
         <div class="text-center mb-6">
           <h1 class="text-2xl font-bold text-on-surface">Activate Your Account</h1>
@@ -344,9 +337,6 @@
   function showStep(id) {
     document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
     document.getElementById(id).classList.add('active');
-    // Hide demo banner on non-pay steps
-    const banner = document.getElementById('demoBanner');
-    if (banner) banner.style.display = (id === 'step-pay') ? 'flex' : 'none';
 
     // Update progress indicator
     if (id === 'step-waiting') {
@@ -474,8 +464,6 @@
   // ════════════════════════════════════════════════════════════════════════
   // Send STK Push (DEMO MODE — skips real payment)
   // ════════════════════════════════════════════════════════════════════════
-  const DEMO_MODE = true; // Set to false when going live
-
   async function sendStkPush() {
     hideError();
     const btn = document.getElementById('payBtn');
@@ -485,14 +473,6 @@
     btn.disabled = true;
     icon.outerHTML = '<span class="spinner-sm mr-1"></span>';
     text.textContent = 'Sending prompt...';
-
-    // ── DEMO MODE: skip real payment, auto-confirm after 3s ──
-    if (DEMO_MODE) {
-      await new Promise(r => setTimeout(r, 3000));
-      const ref = 'DEMO_' + Date.now();
-      onPaymentSuccess(ref);
-      return;
-    }
 
     try {
       const res = await fetch('/api/stk-push', {
