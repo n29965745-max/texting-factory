@@ -365,7 +365,7 @@
     pollInterval = setInterval(async () => {
       pollCount++;
       try {
-        const res = await fetch('/api/stk-status/' + encodeURIComponent(reference));
+        const res = await fetch('/api/stk-status?ref=' + encodeURIComponent(reference));
         const data = await res.json();
 
         const resultCode = data.ResultCode !== undefined
