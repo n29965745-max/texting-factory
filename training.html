@@ -88,58 +88,70 @@
 
       <!-- STEP 1: Pay training fee -->
       <div class="step active" id="step-pay">
+
         <div class="text-center mb-6">
-          <h1 class="text-2xl font-bold text-on-surface">Training Fee</h1>
-          <p class="text-on-surface-variant text-sm mt-1">Pay <strong>KES 100</strong> to unlock Kiswahili training sessions</p>
+          <h1 class="text-2xl font-bold text-on-surface">Pay Training Fee</h1>
+          <p class="text-on-surface-variant text-sm mt-1">A one-time fee of <strong>KES 100</strong> unlocks Kiswahili training sessions</p>
         </div>
 
-        <!-- Amount Card -->
-        <div class="bg-gradient-to-br from-primary via-primary-container to-primary text-on-primary rounded-2xl p-6 mb-4 shadow-lg">
-          <div class="flex items-center justify-between mb-4">
-            <div>
-              <p class="text-xs uppercase tracking-widest opacity-80 font-semibold">Training Fee</p>
-              <p class="text-4xl font-extrabold mt-1">KES 100</p>
+        <!-- Visual + Amount Card -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full mb-4">
+          <!-- Visual -->
+          <div class="bg-surface-container-low border border-outline-variant rounded-2xl p-8 flex flex-col items-center justify-center min-h-[220px]">
+            <div class="w-24 h-24 rounded-full bg-primary-fixed flex items-center justify-center mb-4">
+              <span class="material-symbols-outlined text-primary text-5xl" style="font-variation-settings:'FILL' 1;">school</span>
             </div>
-            <span class="material-symbols-outlined text-4xl opacity-30" style="font-variation-settings:'FILL' 1;">school</span>
+            <p class="font-bold text-on-surface text-center">Kiswahili Training</p>
+            <p class="text-xs text-on-surface-variant text-center mt-1">Learn to teach & earn</p>
           </div>
-          <div class="bg-white/15 rounded-xl p-3 flex items-center gap-3">
-            <span class="material-symbols-outlined text-lg">check_circle</span>
-            <span class="text-sm">One-time fee — lifetime access to training</span>
+
+          <!-- Payment card -->
+          <div class="bg-white border border-outline-variant rounded-2xl p-5 flex flex-col shadow-sm">
+            <div class="flex items-center mb-3">
+              <span class="bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full text-xs font-bold">Training Access</span>
+            </div>
+            <h3 class="font-bold mb-2">What you get</h3>
+            <ul class="space-y-2 mb-4 flex-grow text-sm">
+              <li class="flex items-start gap-2"><span class="material-symbols-outlined text-secondary text-base" style="font-variation-settings:'FILL' 1;">check_circle</span><span>Kiswahili tutoring with international learners</span></li>
+              <li class="flex items-start gap-2"><span class="material-symbols-outlined text-secondary text-base" style="font-variation-settings:'FILL' 1;">check_circle</span><span>Earn 20 KES per message sent</span></li>
+              <li class="flex items-start gap-2"><span class="material-symbols-outlined text-secondary text-base" style="font-variation-settings:'FILL' 1;">check_circle</span><span>Withdraw anytime via M-Pesa</span></li>
+              <li class="flex items-start gap-2"><span class="material-symbols-outlined text-secondary text-base" style="font-variation-settings:'FILL' 1;">check_circle</span><span>One-time fee — lifetime access</span></li>
+            </ul>
+            <div class="bg-primary-fixed rounded-xl p-3 flex items-center justify-between">
+              <div>
+                <p class="text-xs text-on-primary-fixed-variant font-semibold uppercase tracking-wide">Training Fee</p>
+                <p class="font-bold text-on-surface text-lg">KES 100</p>
+              </div>
+              <span class="material-symbols-outlined text-primary" style="font-variation-settings:'FILL' 1;">payments</span>
+            </div>
           </div>
         </div>
 
-        <!-- What you get -->
-        <div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-5 mb-4">
-          <h3 class="font-bold text-sm mb-3">What's included</h3>
-          <div class="space-y-2.5">
-            <div class="flex items-center gap-3">
-              <span class="material-symbols-outlined text-secondary text-lg" style="font-variation-settings:'FILL' 1;">chat</span>
-              <span class="text-sm text-on-surface-variant">Kiswahili tutoring sessions with international learners</span>
-            </div>
-            <div class="flex items-center gap-3">
-              <span class="material-symbols-outlined text-secondary text-lg" style="font-variation-settings:'FILL' 1;">payments</span>
-              <span class="text-sm text-on-surface-variant">Earn 20 KES per message sent</span>
-            </div>
-            <div class="flex items-center gap-3">
-              <span class="material-symbols-outlined text-secondary text-lg" style="font-variation-settings:'FILL' 1;">account_balance_wallet</span>
-              <span class="text-sm text-on-surface-variant">Withdraw anytime via M-Pesa</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Phone display -->
-        <div class="bg-surface-container rounded-xl p-4 mb-4 phone-card border border-outline-variant">
-          <p class="text-xs text-on-surface-variant uppercase tracking-wide font-semibold mb-1">M-Pesa Number</p>
-          <div class="flex items-center justify-between">
+        <!-- Phone destination card -->
+        <div class="phone-card bg-surface-container-lowest border border-outline-variant rounded-2xl p-5 mb-4 flex items-center justify-between shadow-sm">
+          <div>
+            <p class="text-xs text-on-surface-variant uppercase tracking-wide font-semibold mb-0.5">Payment prompt will be sent to</p>
             <p class="font-bold text-on-surface text-lg" id="phoneDisplay">+254 7XX XXX XXX</p>
-            <span class="material-symbols-outlined text-primary" style="font-variation-settings:'FILL' 1;">smartphone</span>
           </div>
-          <p class="text-xs text-on-surface-variant mt-1">An STK prompt will be sent to this number</p>
+          <span class="material-symbols-outlined text-primary text-3xl" style="font-variation-settings:'FILL' 1;">smartphone</span>
         </div>
 
-        <p class="text-center text-xs text-on-surface-variant mb-4">
-          Wrong number? <a href="signup.html" class="text-primary font-semibold hover:underline">Go back</a> to update it.
-        </p>
+        <!-- What happens next -->
+        <div class="bg-surface-container-low rounded-xl p-4 mb-5 space-y-2">
+          <p class="text-xs font-bold text-on-surface uppercase tracking-wide mb-2">What happens next:</p>
+          <div class="flex items-center gap-3 text-sm">
+            <span class="w-6 h-6 rounded-full bg-primary text-on-primary flex items-center justify-center text-xs font-bold shrink-0">1</span>
+            <span>Tap the button — your phone receives an M-Pesa prompt</span>
+          </div>
+          <div class="flex items-center gap-3 text-sm text-on-surface-variant">
+            <span class="w-6 h-6 rounded-full bg-surface-container flex items-center justify-center text-xs font-bold shrink-0">2</span>
+            <span>Enter your M-Pesa PIN to approve KES 100</span>
+          </div>
+          <div class="flex items-center gap-3 text-sm text-on-surface-variant">
+            <span class="w-6 h-6 rounded-full bg-surface-container flex items-center justify-center text-xs font-bold shrink-0">3</span>
+            <span>Your training access activates instantly</span>
+          </div>
+        </div>
 
         <!-- Error area -->
         <div id="errorBox" class="hidden bg-error-container text-on-error-container rounded-xl p-4 mb-4 flex items-start gap-3">
@@ -150,10 +162,15 @@
           </div>
         </div>
 
+        <!-- CTA Button -->
         <button id="payBtn" class="pay-btn w-full bg-primary text-on-primary font-bold py-4 rounded-2xl flex items-center justify-center gap-2 shadow-lg transition-all text-base">
           <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1;" id="payBtnIcon">phone_iphone</span>
-          <span id="payBtnText">Pay KES 100 via M-Pesa</span>
+          <span id="payBtnText">Send M-Pesa Prompt (KES 100)</span>
         </button>
+
+        <p class="text-center text-xs text-on-surface-variant mt-4">
+          Wrong number? <a href="signup.html" class="text-primary font-semibold hover:underline">Go back</a> to update it.
+        </p>
       </div>
 
       <!-- STEP 1b: Waiting for payment -->
