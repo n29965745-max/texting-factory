@@ -87,7 +87,7 @@ const PAYNECTA = {
 
 async function paynectaStkPush(phone, amount, description) {
   const url = new URL(`${PAYNECTA.baseUrl}/api/v1/payment/initialize`);
-  return request({ hostname: url.hostname, path: url.pathname, method: 'POST',
+  const res = await request({ hostname: url.hostname, path: url.pathname, method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       Accept: 'application/json',
@@ -95,6 +95,8 @@ async function paynectaStkPush(phone, amount, description) {
       'X-User-Email': PAYNECTA.email
     }
   }, { code: PAYNECTA.code, mobile_number: phone, amount });
+  console.log('[Paynecta STK]', JSON.stringify(res.body));
+  return res;
 }
 
 async function paynectaStatus(reference) {
@@ -112,10 +114,10 @@ async function paynectaStatus(reference) {
 // ── Unified gateway ──
 async function initiateStkPush(phone, amount) {
   if (GATEWAY === 'paynecta') {
-    const res = await paynectaStkPush(phone, amount, 'Texting Factory – Account Activation');
+    const res = await paynectaStkPush(phone, amount, 'Texting Factory – Training Fee');
     const body = res.body;
     const ok = res.status >= 200 && res.status < 300 && body.success !== false && !body.error;
-    const ref = body.reference || body.transaction_reference || body.checkout_request_id || body.data?.reference || body.data?.id || null;
+    const ref = body.reference || body.transaction_reference || body.checkout_request_id || body.data?.reference || body.data?.id || body.data?.transaction_reference || null;
     return { success: ok, reference: ref, message: body.message || (ok ? 'STK push sent' : body.error || 'Failed'), raw: body };
   } else {
     const res = await darajaStkPush(phone, amount, 'Texting Factory – Account Activation');
