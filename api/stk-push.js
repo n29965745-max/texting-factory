@@ -25,7 +25,7 @@ module.exports = async (req, res) => {
     if (GATEWAY === 'daraja' && (!DARAJA.consumerKey || !DARAJA.consumerSecret)) {
       return res.status(503).json({ success: false, error: 'Daraja credentials not configured.' });
     }
-    if (GATEWAY === 'paynecta' && (!PAYNECTA.accountId || !PAYNECTA.apiKey)) {
+    if (GATEWAY === 'paynecta' && (!PAYNECTA.code || !PAYNECTA.apiKey)) {
       return res.status(503).json({ success: false, error: 'Paynecta credentials not configured.' });
     }
 
