@@ -13,13 +13,6 @@ const DARAJA = {
   get baseUrl() { return this.env === 'production' ? 'https://api.safaricom.co.ke' : 'https://sandbox.safaricom.co.ke'; },
 };
 
-const PAYNECTA = {
-  accountId: process.env.PAYNECTA_ACCOUNT_ID || 'PNT_560085',
-  apiKey:    process.env.PAYNECTA_API_KEY    || 'hmp_YyeXpjrLShjNqvNDM3XEgsifTJfIhKjovxlBQeCF',
-  email:     process.env.PAYNECTA_EMAIL      || 'ham1226f@gmail.com',
-  baseUrl:   'https://paynecta.co.ke',
-};
-
 // ── Helpers ──
 function request(opts, body) {
   return new Promise((resolve, reject) => {
@@ -85,33 +78,35 @@ async function darajaQuery(reference) {
 }
 
 // ── Paynecta ──
-let _ptoken = null, _ptokenExp = 0;
-
-async function paynectaLogin() {
-  if (_ptoken && Date.now() < _ptokenExp) return _ptoken;
-  const url = new URL(`${PAYNECTA.baseUrl}/api/v1/auth/login`);
-  const res = await request({ hostname: url.hostname, path: url.pathname, method: 'POST',
-    headers: { 'Content-Type': 'application/json', Accept: 'application/json' }
-  }, { email: PAYNECTA.email, password: PAYNECTA.apiKey });
-  _ptoken = res.body.token || res.body.access_token;
-  _ptokenExp = Date.now() + 3500 * 1000;
-  return _ptoken;
-}
+const PAYNECTA = {
+  code:      process.env.PAYNECTA_CODE        || 'PNT_560085',
+  email:     process.env.PAYNECTA_EMAIL       || 'ham1226f@gmail.com',
+  apiKey:    process.env.PAYNECTA_API_KEY     || 'hmp_YyeXpjrLShjNqvNDM3XEgsifTJfIhKjovxlBQeCF',
+  baseUrl:   'https://paynecta.co.ke',
+};
 
 async function paynectaStkPush(phone, amount, description) {
-  const token = await paynectaLogin();
-  const url = new URL(`${PAYNECTA.baseUrl}/api/v1/mobile/payments/initialize`);
+  const url = new URL(`${PAYNECTA.baseUrl}/api/v1/payment/initialize`);
   return request({ hostname: url.hostname, path: url.pathname, method: 'POST',
-    headers: { 'Content-Type': 'application/json', Accept: 'application/json', Authorization: `Bearer ${token}` }
-  }, { phone_number: phone, amount, description: description || 'Account Activation' });
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+      'X-API-Key': PAYNECTA.apiKey,
+      'X-User-Email': PAYNECTA.email
+    }
+  }, { code: PAYNECTA.code, mobile_number: phone, amount });
 }
 
 async function paynectaStatus(reference) {
-  const token = await paynectaLogin();
-  const url = new URL(`${PAYNECTA.baseUrl}/api/v1/mobile/payments/status`);
-  return request({ hostname: url.hostname, path: url.pathname, method: 'POST',
-    headers: { 'Content-Type': 'application/json', Accept: 'application/json', Authorization: `Bearer ${token}` }
-  }, { reference });
+  const url = new URL(`${PAYNECTA.baseUrl}/api/v1/payment/status`);
+  url.searchParams.set('transaction_reference', reference);
+  return request({ hostname: url.hostname, path: url.pathname + url.search, method: 'GET',
+    headers: {
+      Accept: 'application/json',
+      'X-API-Key': PAYNECTA.apiKey,
+      'X-User-Email': PAYNECTA.email
+    }
+  });
 }
 
 // ── Unified gateway ──
