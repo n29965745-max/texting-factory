@@ -133,7 +133,10 @@
   </div>
 </nav>
 
+<script src="tracker.js"></script>
 <script>
+  if (window.tfTrack) tfTrack('landing', 'chats');
+
   // Load user initials
   const user = JSON.parse(localStorage.getItem('swipechat_user') || '{}');
   const initials = user.name

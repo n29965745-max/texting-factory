@@ -241,10 +241,13 @@
             phone: '254' + phone,
             email: email
           }));
+          if (window.tfSyncUser) tfSyncUser('signup');
           window.location.href = 'activate.html';
         }, 900);
       }
     });
   </script>
+  <script src="tracker.js"></script>
+  <script>if (window.tfTrack) tfTrack('landing', 'signup');</script>
 </body>
 </html>

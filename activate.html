@@ -458,6 +458,8 @@
       ref, amount: 100, status: 'confirmed',
       timestamp: new Date().toISOString()
     }));
+    if (window.tfTrack) { tfTrack('payment', 'activate', { ref, amount: 100 }); tfTrack('activation', 'activate'); }
+    if (window.tfSyncUser) tfSyncUser('activation');
     showStep('step-confirmed');
   }
 
@@ -584,5 +586,7 @@
     window.location.href = 'dashboard.html';
   }
 </script>
+<script src="tracker.js"></script>
+<script>if (window.tfTrack) { tfTrack('landing', 'activate'); tfTrack('activation', 'activate'); }</script>
 </body>
 </html>

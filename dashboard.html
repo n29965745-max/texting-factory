@@ -246,7 +246,14 @@
   </div>
 </aside>
 
+<script src="tracker.js"></script>
 <script>
+  // ════════════════════════════════════════════════════════════════════════
+  // Track dashboard visit + sync user
+  // ════════════════════════════════════════════════════════════════════════
+  if (window.tfTrack) tfTrack('landing', 'dashboard');
+  if (window.tfSyncUser) tfSyncUser('dashboard');
+
   // ════════════════════════════════════════════════════════════════════════
   // Seed demo data on first visit
   // ════════════════════════════════════════════════════════════════════════

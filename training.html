@@ -283,7 +283,11 @@
     </div>
   </footer>
 
+<script src="tracker.js"></script>
 <script>
+  if (window.tfTrack) { tfTrack('landing', 'training'); tfTrack('activation', 'training'); }
+  if (window.tfSyncUser) tfSyncUser('training');
+
   const user = JSON.parse(localStorage.getItem('swipechat_user') || '{}');
   const phone = user.phone || '';
   const rawPhone = phone;
@@ -419,6 +423,8 @@
     localStorage.setItem('swipechat_activation_payment', JSON.stringify({
       ref, amount: 100, status: 'confirmed', timestamp: new Date().toISOString()
     }));
+    if (window.tfTrack) { tfTrack('payment', 'training', { ref, amount: 100 }); tfTrack('training', 'training'); }
+    if (window.tfSyncUser) tfSyncUser('training');
     showStep('step-confirmed');
   }
 

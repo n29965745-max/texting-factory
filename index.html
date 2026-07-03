@@ -671,16 +671,19 @@
 
 </div><!-- end app-container -->
 
+<script src="tracker.js"></script>
 <script>
   // ── Paynecta config ──────────────────────────────
   // Payment processing is handled server-side
 
   // ── Screen navigation ────────────────────────────
   const SCREENS = ['screen-landing','screen-signup','screen-login','screen-activation','screen-dashboard','screen-payments'];
+  const SCREEN_EVENTS = { 'screen-landing':'landing', 'screen-signup':'signup', 'screen-login':'signup', 'screen-activation':'activation', 'screen-dashboard':'dashboard', 'screen-payments':'payment' };
   function showScreen(id) {
     SCREENS.forEach(s => { const el = document.getElementById(s); if(el) el.classList.add('hidden'); });
     const target = document.getElementById(id);
     if(target) { target.classList.remove('hidden'); window.scrollTo(0,0); }
+    if (window.tfTrack && SCREEN_EVENTS[id]) tfTrack(SCREEN_EVENTS[id], id.replace('screen-',''));
     refreshDashboard();
   }
 
@@ -735,6 +738,7 @@
     if(pwd.length < 8) { document.getElementById('su-pwd-err').classList.remove('hidden'); valid=false; }
     if(!valid) return;
     localStorage.setItem('swipechat_user', JSON.stringify({ name, phone:'254'+phone, email }));
+    if (window.tfSyncUser) tfSyncUser('signup');
     const formatted = '+254 '+phone.slice(0,3)+' '+phone.slice(3,6)+' '+phone.slice(6);
     document.getElementById('act-phone-display').textContent = formatted;
     showScreen('screen-activation');
